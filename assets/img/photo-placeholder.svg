@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" role="img" aria-label="Photo placeholder">
+  <!-- PLACEHOLDER — replace with a real photo (JPG/WebP), roughly 4:3. -->
+  <defs>
+    <linearGradient id="pph" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E2049"/>
+      <stop offset="100%" stop-color="#050C1E"/>
+    </linearGradient>
+    <pattern id="ppHeads" width="46" height="54" patternUnits="userSpaceOnUse">
+      <circle cx="23" cy="20" r="11" fill="#16305F"/>
+      <path d="M0 54c0-13 10-20 23-20s23 7 23 20Z" fill="#16305F"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="620" fill="url(#pph)"/>
+  <rect y="300" width="800" height="320" fill="url(#ppHeads)" opacity=".85"/>
+  <!-- screen glow -->
+  <rect x="150" y="90" width="500" height="270" rx="8" fill="#132A57" stroke="#C8A24A" stroke-width="3"/>
+  <rect x="168" y="108" width="464" height="234" rx="4" fill="#1F5F3C"/>
+  <g stroke="rgba(245,242,234,.3)" stroke-width="3" fill="none">
+    <path d="M400 108v234"/><ellipse cx="400" cy="225" rx="58" ry="42"/>
+  </g>
+  <!-- scarf -->
+  <rect x="250" y="392" width="300" height="26" rx="13" fill="#C8A24A" transform="rotate(-3 400 405)"/>
+  <text x="400" y="560" text-anchor="middle" font-family="Barlow, sans-serif" font-size="21"
+        font-weight="700" letter-spacing="4" fill="rgba(245,242,234,.62)">REPLACE WITH PHOTO</text>
+</svg>
