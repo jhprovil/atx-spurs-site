@@ -41,14 +41,15 @@ window.AUSTIN_SPURS = {
     /* Social accounts. Put your real handles/URLs in here — the homepage reads
        from this. Set a url to "" to grey that one out as "coming soon", which
        is how TikTok is showing right now. */
-    /* CAUTION: "Austin Spurs" is also the San Antonio Spurs' G League affiliate,
-       and they hold the obvious handles. Verify any handle points at the
-       supporters group before adding it. An empty string greys the tile out as
-       "coming soon", which is better than linking to a basketball team. */
+    /* CAUTION: "Austin Spurs" is also the San Antonio Spurs' G League affiliate.
+       On Instagram and X we hold @austinspurs and they use @austin_spurs — but
+       on Facebook it's the other way round: facebook.com/austinspurs is theirs,
+       and ours is the group URL below. Check any new handle before adding it.
+       An empty string greys the tile out as "coming soon". */
     social: {
-      instagram: "",   // TODO: real handle needed — @austinspurs is not us
-      facebook:  "https://www.facebook.com/groups/austinspurs/",   // verified: the supporters group
-      x:         "",   // TODO: real handle needed — @austin_spurs is the G League team
+      instagram: "https://instagram.com/austinspurs",
+      facebook:  "https://www.facebook.com/groups/austinspurs/",
+      x:         "https://x.com/austinspurs",
       tiktok:    ""
     },
 
