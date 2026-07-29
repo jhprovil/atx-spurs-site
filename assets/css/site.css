@@ -699,14 +699,27 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .fixture__mon { font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--brass-dk); }
 
 .fixture__meta { min-width: 0; }
+/* The Home/Away chip sits inside the opponent heading, so the heading is a flex
+   row with a real gap. Previously the chip's padding rule was scoped to
+   .fixture__sub — where the chip does not live — so it inherited only its
+   background colour and sat flush against the team name at display size.
+   Long club names made the two bleed together on narrow screens. */
 .fixture__opp {
-  font-family: var(--font-display); font-size: 1.45rem; line-height: 1.05;
-  color: var(--navy-900); margin-bottom: .3rem;
+  font-family: var(--font-display); font-size: 1.45rem; line-height: 1.1;
+  color: var(--navy-900); margin-bottom: .35rem;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: .4rem .65rem;
 }
 .fixture__sub { font-size: .87rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: .35rem .9rem; }
-.fixture__sub .ha {
-  font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .7rem;
-  padding: .15rem .5rem; border-radius: 2px;
+
+.ha {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  font-size: .62rem; line-height: 1.5;
+  padding: .22rem .55rem;
+  border-radius: 2px;
+  white-space: nowrap;
 }
 .ha--h { background: var(--navy-700); color: var(--bone); }
 .ha--a { background: var(--bone-2); color: var(--navy-800); }
@@ -842,7 +855,14 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 @media (max-width: 900px) {
   .c2c-hero__inner { grid-template-columns: 1fr; }
-  .c2c-hero__art { order: -1; max-width: 340px; }
+  /* justify-self: end is inherited from the desktop rule and pins the poster to
+     one edge of a full-width column. Centre it explicitly on mobile. */
+  .c2c-hero__art {
+    order: -1;
+    max-width: 340px;
+    justify-self: center;
+    margin-inline: auto;
+  }
 }
 
 .c2c-hero__tag {
@@ -890,7 +910,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   background: var(--c2c-navy);
   transition: transform .3s ease;
 }
-.c2c-hero__art:hover { transform: rotate(-1deg) scale(1.015); }
+/* Only on devices that genuinely hover. On touch, a tap can latch the hover
+   state, leaving the poster rotated and overflowing its column. */
+@media (hover: hover) {
+  .c2c-hero__art:hover { transform: rotate(-1deg) scale(1.015); }
+}
 .c2c-hero__art img { width: 100%; height: auto; display: block; }
 
 /* Small print under the poster */
