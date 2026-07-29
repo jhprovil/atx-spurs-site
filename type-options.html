@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Type options — Austin Spurs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500..800&family=Saira+Condensed:wght@600;700;800&family=Oswald:wght@500;600;700&family=Fjalla+One&family=Anton&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#050C1E; --navy-800:#0A1733; --navy-700:#0E2049; --navy-600:#16305F;
+    --brass:#C8A24A; --brass-lt:#E6CD8B; --brass-dk:#8A6C24;
+    --bone:#F5F2EA; --bone-2:#E8E3D6; --muted:#6E7686;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bone);color:#12151C;font:17px/1.6 Barlow,system-ui,sans-serif}
+  .shell{width:min(1100px,100% - 2.5rem);margin-inline:auto}
+  .top{background:var(--navy-900);color:var(--bone);padding:3rem 0 2.6rem;border-bottom:3px solid var(--brass)}
+  .top h1{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);
+          text-transform:uppercase;margin:.2em 0 .3em;line-height:.95;letter-spacing:.015em}
+  .top p{max-width:64ch;color:rgba(245,242,234,.82);margin:0}
+  .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--brass-lt);margin:0}
+
+  .note{background:#fff;border-left:4px solid var(--brass);padding:1.3rem 1.5rem;margin:2.5rem 0;
+        box-shadow:0 18px 45px -22px rgba(5,12,30,.5)}
+  .note b{display:block;margin-bottom:.3rem}
+  .note p{margin:0;color:var(--muted);font-size:.96rem}
+
+  /* ---- specimen ---- */
+  .spec{background:#fff;border:1px solid var(--bone-2);margin:0 0 2rem;overflow:hidden;
+        box-shadow:0 18px 45px -24px rgba(5,12,30,.45)}
+  .spec.is-current{border:2px solid var(--brass)}
+  .spec__hd{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+            padding:1.1rem 1.5rem;border-bottom:1px solid var(--bone-2);background:var(--bone)}
+  .spec__name{font-weight:700;font-size:1.05rem}
+  .spec__name span{font-weight:400;color:var(--muted);font-size:.85rem}
+  .tagpill{background:var(--brass);color:var(--navy-900);font-size:.62rem;font-weight:800;
+           letter-spacing:.18em;text-transform:uppercase;padding:.3rem .65rem}
+  .spec__dist{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-dk)}
+
+  /* header lockup mock */
+  .mock-hd{background:var(--navy-900);padding:1.1rem 1.5rem;display:flex;align-items:center;gap:.95rem}
+  .mock-hd img{height:66px;width:auto}
+  .mock-wm{padding-left:.95rem;border-left:1px solid rgba(200,162,74,.45);align-self:stretch;
+           display:flex;align-items:center}
+  .mock-wm span{color:var(--bone);text-transform:uppercase;font-size:1.72rem;line-height:.9;letter-spacing:.045em}
+
+  .spec__body{padding:1.8rem 1.5rem 2rem}
+  .big{text-transform:uppercase;line-height:.92;font-size:clamp(2.4rem,6.2vw,4.4rem);margin:0 0 .35em;color:var(--navy-900)}
+  .big em{font-style:normal;color:var(--brass-dk);display:block}
+  .row{display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap;margin-top:1.6rem;
+       border-top:1px solid var(--bone-2);padding-top:1.4rem}
+  .datebox{text-align:center;border-right:1px solid var(--bone-2);padding-right:1.2rem}
+  .datebox .d{font-size:2.35rem;line-height:1;color:var(--navy-800);text-transform:uppercase}
+  .datebox .m{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dk);font-family:Barlow,sans-serif}
+  .opp{font-size:1.45rem;text-transform:uppercase;line-height:1.05;color:var(--navy-900)}
+  .why{margin:1.4rem 0 0;color:var(--muted);font-size:.95rem;max-width:66ch}
+
+  .foot{background:var(--navy-900);color:rgba(245,242,234,.7);padding:2.4rem 0;margin-top:3rem;font-size:.9rem}
+  .foot code{background:rgba(245,242,234,.1);padding:.12rem .4rem}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="shell">
+    <p class="eyebrow">Pick one</p>
+    <h1>The Lockup, Five Ways</h1>
+    <p>
+      Same words, same crest slot, same sizes. Only the typeface changes. Each block also
+      shows a hero headline and a fixture row so you can see how the face behaves at the
+      three sizes that actually matter on the site.
+    </p>
+  </div>
+</div>
+
+<div class="shell">
+
+  <div class="note">
+    <b>Why not the real thing</b>
+    <p>
+      Tottenham's face is a custom family F37 Foundry built for the club — proprietary,
+      all rights reserved, no licence available at any price. F37's own notes say the display
+      cut was sharpened to echo the cockerel's beak and spur, with joins cut and small serifs
+      added. So the target is that quality: condensed caps with angular, cut terminals.
+      Every option below is a cousin, none is a copy.
+    </p>
+  </div>
+
+  <!-- 1 -->
+  <section class="spec">
+    <div class="spec__hd">
+      <div class="spec__name">Big Shoulders Display <span>— Google Fonts, free</span></div>
+      <div class="spec__dist">~30% away</div>
+    </div>
+    <div class="mock-hd">
+      <img src="assets/img/logo.png" alt="">
+      <span class="mock-wm"><span style="font-family:'Big Shoulders Display';font-weight:700">Austin Spurs</span></span>
+    </div>
+    <div class="spec__body">
+      <h2 class="big" style="font-family:'Big Shoulders Display';font-weight:700">To Dare Is<em>To Do It Early</em></h2>
+      <div class="row">
+        <div class="datebox"><div class="d" style="font-family:'Big Shoulders Display';font-weight:700">22</div><div class="m">Aug</div></div>
+        <div class="opp" style="font-family:'Big Shoulders Display';font-weight:700">Brentford</div>
+      </div>
+      <p class="why">
+        Sharp angular cuts on every terminal, which is the closest anything free gets to what
+        F37 did to the beak and spur. Narrower than Tottenham's, and its skeleton is American
+        industrial rather than English. That difference is the point: it gives the divergence a
+        reason instead of looking like a failed imitation.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="spec is-current">
+    <div class="spec__hd">
+      <div class="spec__name">Saira Condensed <span>— Google Fonts, free</span></div>
+      <div><span class="tagpill">Applied now</span> <span class="spec__dist">~20% away</span></div>
+    </div>
+    <div class="mock-hd">
+      <img src="assets/img/logo.png" alt="">
+      <span class="mock-wm"><span style="font-family:'Saira Condensed';font-weight:700">Austin Spurs</span></span>
+    </div>
+    <div class="spec__body">
+      <h2 class="big" style="font-family:'Saira Condensed';font-weight:700">To Dare Is<em>To Do It Early</em></h2>
+      <div class="row">
+        <div class="datebox"><div class="d" style="font-family:'Saira Condensed';font-weight:700">22</div><div class="m">Aug</div></div>
+        <div class="opp" style="font-family:'Saira Condensed';font-weight:700">Brentford</div>
+      </div>
+      <p class="why">
+        The closest of the five. Squared-off, modern, the width and temperature of a current
+        Premier League club face. Safest choice and the most legible at small sizes. Risk is
+        that "closest" also means least memorable, and it edges nearer to Tottenham's own than
+        you may want given they'll be looking.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="spec">
+    <div class="spec__hd">
+      <div class="spec__name">Oswald <span>— Google Fonts, free</span></div>
+      <div class="spec__dist">~35% away</div>
+    </div>
+    <div class="mock-hd">
+      <img src="assets/img/logo.png" alt="">
+      <span class="mock-wm"><span style="font-family:Oswald;font-weight:600">Austin Spurs</span></span>
+    </div>
+    <div class="spec__body">
+      <h2 class="big" style="font-family:Oswald;font-weight:600">To Dare Is<em>To Do It Early</em></h2>
+      <div class="row">
+        <div class="datebox"><div class="d" style="font-family:Oswald;font-weight:600">22</div><div class="m">Aug</div></div>
+        <div class="opp" style="font-family:Oswald;font-weight:600">Brentford</div>
+      </div>
+      <p class="why">
+        A condensed gothic in the old English signage tradition, which is genuinely where a lot
+        of matchday typography comes from. Reads instantly as sport. The catch is volume: it is
+        one of the most-used faces on the web, so it will feel familiar in a generic way rather
+        than a club way.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="spec">
+    <div class="spec__hd">
+      <div class="spec__name">Fjalla One <span>— Google Fonts, free</span></div>
+      <div class="spec__dist">~40% away</div>
+    </div>
+    <div class="mock-hd">
+      <img src="assets/img/logo.png" alt="">
+      <span class="mock-wm"><span style="font-family:'Fjalla One'">Austin Spurs</span></span>
+    </div>
+    <div class="spec__body">
+      <h2 class="big" style="font-family:'Fjalla One'">To Dare Is<em>To Do It Early</em></h2>
+      <div class="row">
+        <div class="datebox"><div class="d" style="font-family:'Fjalla One'">22</div><div class="m">Aug</div></div>
+        <div class="opp" style="font-family:'Fjalla One'">Brentford</div>
+      </div>
+      <p class="why">
+        Heavier and warmer, with slightly softened corners. Feels more pub than stadium, which
+        may actually suit a supporters club better than it suits a football club. Only one
+        weight though, so there is no range to work with as the site grows.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="spec">
+    <div class="spec__hd">
+      <div class="spec__name">Anton <span>— what the first draft used</span></div>
+      <div class="spec__dist">~55% away</div>
+    </div>
+    <div class="mock-hd">
+      <img src="assets/img/logo.png" alt="">
+      <span class="mock-wm"><span style="font-family:Anton">Austin Spurs</span></span>
+    </div>
+    <div class="spec__body">
+      <h2 class="big" style="font-family:Anton">To Dare Is<em>To Do It Early</em></h2>
+      <div class="row">
+        <div class="datebox"><div class="d" style="font-family:Anton">22</div><div class="m">Aug</div></div>
+        <div class="opp" style="font-family:Anton">Brentford</div>
+      </div>
+      <p class="why">
+        Terrace poster, fanzine, matchday programme. Loud and good at it, but it is a poster
+        face rather than a club face, and the single heavy weight flattens everything to one
+        volume. Furthest from Tottenham of the five.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<div class="foot">
+  <div class="shell">
+    Tell me which one and I'll switch it. It's two changes: <code>--font-display</code> in
+    <code>assets/css/site.css</code> and the Google Fonts link in the five HTML files.
+    The crest slot is already sized for whatever logo you send.
+  </div>
+</div>
+
+</body>
+</html>
