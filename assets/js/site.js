@@ -213,7 +213,17 @@
     var mount = document.getElementById("fixture-list");
     if (!mount) return;
 
+    /* The default view shows this many, then offers to reveal the rest in one
+       go. Everything is already in the page, so there is nothing to "load" —
+       paging it out a handful at a time would be friction with no payoff.
+       Applying a filter lifts the limit: the user has already narrowed
+       deliberately, so truncating a second time just gets in the way. */
+    var PREVIEW_COUNT = 5;
+
     var mode = "upcoming";
+    var expanded = false;
+    var moreBtn = document.getElementById("fixture-more");
+    var section = mount.closest("section");
 
     function draw() {
       var list = DATA.fixtures.slice().sort(function (a, b) {
@@ -224,19 +234,48 @@
       if (mode === "showing") list = list.filter(function (f) { return f.tramps === "open" && isUpcoming(f); });
 
       if (!list.length) {
-        mount.innerHTML = '<p class="section__lede">Nothing to show under this filter yet. Try “Full season”.</p>';
+        mount.innerHTML = '<p class="section__lede">Nothing matches that filter yet. Try “Upcoming”.</p>';
+        if (moreBtn) moreBtn.hidden = true;
         return;
       }
-      var firstUpcoming = list.findIndex(isUpcoming);
-      mount.innerHTML = list.map(function (f, i) {
+
+      var limited = (mode === "upcoming") && !expanded && list.length > PREVIEW_COUNT;
+      var shown = limited ? list.slice(0, PREVIEW_COUNT) : list;
+
+      var firstUpcoming = shown.findIndex(isUpcoming);
+      mount.innerHTML = shown.map(function (f, i) {
         return fixtureHtml(f, i === firstUpcoming);
       }).join("");
+
+      if (moreBtn) {
+        var canToggle = (mode === "upcoming") && list.length > PREVIEW_COUNT;
+        moreBtn.hidden = !canToggle;
+        if (canToggle) {
+          moreBtn.innerHTML = limited
+            ? 'Show all ' + list.length + ' upcoming matches <span class="arw" aria-hidden="true">&rarr;</span>'
+            : 'Show fewer';
+          moreBtn.setAttribute("aria-expanded", String(!limited));
+        }
+      }
+    }
+
+    if (moreBtn) {
+      moreBtn.addEventListener("click", function () {
+        expanded = !expanded;
+        draw();
+        /* Collapsing from the bottom of a long list would strand the reader
+           somewhere below the fold. Bring them back to the list. */
+        if (!expanded && section) {
+          section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        }
+      });
     }
 
     var chips = document.querySelectorAll("[data-filter]");
     Array.prototype.forEach.call(chips, function (c) {
       c.addEventListener("click", function () {
         mode = c.getAttribute("data-filter");
+        expanded = false;          /* returning to Upcoming starts collapsed again */
         Array.prototype.forEach.call(chips, function (x) {
           x.setAttribute("aria-pressed", String(x === c));
         });
