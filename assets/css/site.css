@@ -76,6 +76,11 @@ body {
   overflow-x: hidden;
 }
 img, svg, iframe { max-width: 100%; display: block; }
+/* Without this, an <img> with width/height attributes keeps its attribute
+   height while max-width shrinks the width — squashing the picture. Any rule
+   that sets height on a class (the crest, the hero watermark, the map iframe)
+   is more specific and still wins. */
+img { height: auto; }
 a { color: inherit; }
 h1, h2, h3, h4 {
   font-family: var(--font-display);
@@ -331,6 +336,27 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   translate: 0 -50%;
   opacity: .17;
   filter: drop-shadow(0 0 60px rgba(230,205,139,.25));
+}
+
+/* ---- Mobile hero ------------------------------------------------------
+   On a short viewport the desktop numbers only just cleared — about 50px of
+   margin — and mobile browsers change innerHeight when the URL bar collapses,
+   which eats exactly that kind of margin and lets the bottom of the crest
+   slide into frame. Rather than tune the margin, mobile gets its own
+   treatment: far more overfill, the crest pushed further off-frame so it
+   reads as a deliberate crop, and much less travel (see SCROLL_TRAVEL in
+   site.js, which also drops on narrow screens).
+   ----------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .hero__stage { inset: -60% -40%; }
+  .hero__crest {
+    height: 135%;
+    right: -26%;
+    opacity: .15;
+  }
+  /* Vertical hairlines are noise at this width and can't be perceived moving. */
+  .hero__rules { display: none; }
+  .hero__dots { opacity: .1; }
 }
 
 /* Halftone screen — rhymes with the halftone quarter inside the crest itself */
@@ -669,6 +695,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* Expand / collapse control under the fixture list */
 .fixtures-more { margin: 1.6rem 0 0; text-align: center; }
 .fixtures-more .btn[hidden] { display: none; }
+.fixtures-more__count { opacity: .7; font-weight: 600; }
+.fixture:focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; }
 .chip {
   border: 1px solid var(--bone-2);
   background: #fff;
