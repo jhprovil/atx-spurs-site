@@ -134,11 +134,9 @@
       and we'll tell you.
     </p>
 
-    <div class="legend">
-      <div class="legend__item"><span class="lamp lamp--open"></span><span><b>Green</b> — Tramps is open. Game on.</span></div>
-      <div class="legend__item"><span class="lamp lamp--tbd"></span><span><b>Amber</b> — not confirmed yet. Check back closer to kickoff.</span></div>
-      <div class="legend__item"><span class="lamp lamp--closed"></span><span><b>Red</b> — Tramps is closed for this one.</span></div>
-    </div>
+    <!-- The colour legend was removed: each fixture already states its status
+         in words next to the lamp, so the legend was explaining something the
+         list says for itself. -->
 
     <div class="fixture-filters" role="group" aria-label="Filter fixtures">
       <!-- "Full season" was removed: it duplicated the expand button below the
@@ -152,6 +150,8 @@
 
     <!-- Reveals the rest of the season in one click. Hidden by default and
          shown by site.js only when there is more to show. -->
+    <p class="visually-hidden" id="fixture-status" role="status" aria-live="polite"></p>
+
     <p class="fixtures-more">
       <button class="btn btn--navy" id="fixture-more" type="button"
               aria-controls="fixture-list" aria-expanded="false" hidden></button>
