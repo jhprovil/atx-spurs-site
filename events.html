@@ -141,13 +141,21 @@
     </div>
 
     <div class="fixture-filters" role="group" aria-label="Filter fixtures">
+      <!-- "Full season" was removed: it duplicated the expand button below the
+           list. These three now filter, rather than overlap. -->
       <button class="chip" data-filter="upcoming" aria-pressed="true">Upcoming</button>
       <button class="chip" data-filter="league"   aria-pressed="false">League only</button>
       <button class="chip" data-filter="showing"  aria-pressed="false">Confirmed at Tramps</button>
-      <button class="chip" data-filter="all"      aria-pressed="false">Full season</button>
     </div>
 
     <div class="fixtures" id="fixture-list"></div>
+
+    <!-- Reveals the rest of the season in one click. Hidden by default and
+         shown by site.js only when there is more to show. -->
+    <p class="fixtures-more">
+      <button class="btn btn--navy" id="fixture-more" type="button"
+              aria-controls="fixture-list" aria-expanded="false" hidden></button>
+    </p>
 
     <p class="section__lede" style="margin-top:2rem;font-size:.9rem">
       Kickoff times are converted from the official Tottenham Hotspur fixture list and are
