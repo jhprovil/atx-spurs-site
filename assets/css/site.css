@@ -589,6 +589,19 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   background: #fff;
   box-shadow: var(--shadow-lift);
 }
+/* Photos in a media row share one 3:2 box. A 16:9 shot at half-width reads as
+   a letterbox strip next to a 3:2 one — technically correct, but it looks
+   squashed and the two heights don't agree. Cropping from the centre gives
+   both the same presence. object-fit keeps the pixels undistorted; only the
+   framing changes. */
+.media-row .figure img {
+  aspect-ratio: 3 / 2;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
 .figure figcaption {
   padding: .85rem 1.1rem;
   font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
