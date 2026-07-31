@@ -69,11 +69,25 @@
     var SCROLL_TRAVEL  = 520;
     var POINTER_TRAVEL = 70;
 
+    /* Narrow screens get roughly a third of the travel. Three reasons: there's
+       far less room before a layer's edge enters frame, mobile browsers resize
+       the viewport when the URL bar collapses (which shifts everything mid-
+       scroll), and large transforms on every scroll frame are the main cause of
+       jank on phones. */
+    function scrollTravel() {
+      return (window.innerWidth || 1200) <= 760 ? 180 : SCROLL_TRAVEL;
+    }
+
+    /* Pointer drift is a mouse affordance. On touch, pointermove fires during
+       a scroll drag, which adds movement nobody asked for. */
+    var finePointer = window.matchMedia("(pointer: fine)").matches;
+
     var pointerX = 0, pointerY = 0, ticking = false;
 
     function render() {
       ticking = false;
       var vh = window.innerHeight || 800;
+      var travel = scrollTravel();
 
       for (var i = 0; i < layers.length; i++) {
         var el = layers[i];
@@ -89,7 +103,7 @@
         var p = (vh - r.top) / (vh + r.height);
         p = Math.max(0, Math.min(1, p));
 
-        var ty = (p - 0.5) * SCROLL_TRAVEL * d * -1;
+        var ty = (p - 0.5) * travel * d * -1;
         var tx = pointerX * d * POINTER_TRAVEL;
         ty += pointerY * d * (POINTER_TRAVEL * 0.45);
 
@@ -213,15 +227,14 @@
     var mount = document.getElementById("fixture-list");
     if (!mount) return;
 
-    /* The default view shows this many, then offers to reveal the rest in one
-       go. Everything is already in the page, so there is nothing to "load" —
-       paging it out a handful at a time would be friction with no payoff.
-       Applying a filter lifts the limit: the user has already narrowed
-       deliberately, so truncating a second time just gets in the way. */
+    /* Shows five, then reveals five more per click until the list runs out.
+       Applying a filter lifts the limit entirely: the user has already
+       narrowed deliberately, so truncating a second time gets in the way. */
     var PREVIEW_COUNT = 5;
+    var STEP = 5;
 
     var mode = "upcoming";
-    var expanded = false;
+    var shownCount = PREVIEW_COUNT;
     var moreBtn = document.getElementById("fixture-more");
     var section = mount.closest("section");
 
@@ -239,8 +252,9 @@
         return;
       }
 
-      var limited = (mode === "upcoming") && !expanded && list.length > PREVIEW_COUNT;
-      var shown = limited ? list.slice(0, PREVIEW_COUNT) : list;
+      var paged = (mode === "upcoming");
+      var shown = paged ? list.slice(0, shownCount) : list;
+      var remaining = paged ? Math.max(0, list.length - shown.length) : 0;
 
       var firstUpcoming = shown.findIndex(isUpcoming);
       mount.innerHTML = shown.map(function (f, i) {
@@ -248,25 +262,53 @@
       }).join("");
 
       if (moreBtn) {
-        var canToggle = (mode === "upcoming") && list.length > PREVIEW_COUNT;
-        moreBtn.hidden = !canToggle;
-        if (canToggle) {
-          moreBtn.innerHTML = limited
-            ? 'Show all ' + list.length + ' upcoming matches <span class="arw" aria-hidden="true">&rarr;</span>'
-            : 'Show fewer';
-          moreBtn.setAttribute("aria-expanded", String(!limited));
+        var canPage = paged && list.length > PREVIEW_COUNT;
+        moreBtn.hidden = !canPage;
+        if (canPage) {
+          if (remaining > 0) {
+            moreBtn.innerHTML = 'Show next ' + Math.min(STEP, remaining) +
+              ' <span class="fixtures-more__count">(' + remaining + ' more)</span>' +
+              ' <span class="arw" aria-hidden="true">&rarr;</span>';
+          } else {
+            moreBtn.innerHTML = 'Show fewer';
+          }
+          moreBtn.setAttribute("aria-expanded", String(remaining === 0));
         }
+      }
+
+      /* Tell screen readers how much of the list is on screen — otherwise
+         "Show next 5" fires with no announced result. */
+      var status = document.getElementById("fixture-status");
+      if (status) {
+        status.textContent = paged
+          ? "Showing " + shown.length + " of " + list.length + " upcoming matches."
+          : "Showing " + list.length + " matches.";
       }
     }
 
     if (moreBtn) {
       moreBtn.addEventListener("click", function () {
-        expanded = !expanded;
-        draw();
-        /* Collapsing from the bottom of a long list would strand the reader
-           somewhere below the fold. Bring them back to the list. */
-        if (!expanded && section) {
-          section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        var total = DATA.fixtures.filter(isUpcoming).length;
+        if (shownCount < total) {
+          var firstNewIndex = shownCount;
+          shownCount += STEP;
+          draw();
+          /* Move focus to the first newly revealed match so keyboard and
+             screen reader users land on the new content, not back at the top. */
+          var cards = mount.querySelectorAll(".fixture");
+          var target = cards[firstNewIndex];
+          if (target) {
+            target.setAttribute("tabindex", "-1");
+            target.focus({ preventScroll: true });
+          }
+        } else {
+          shownCount = PREVIEW_COUNT;
+          draw();
+          /* Collapsing from the bottom of a long list would strand the reader
+             below the fold. Bring them back to the list. */
+          if (section) {
+            section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+          }
         }
       });
     }
@@ -275,7 +317,7 @@
     Array.prototype.forEach.call(chips, function (c) {
       c.addEventListener("click", function () {
         mode = c.getAttribute("data-filter");
-        expanded = false;          /* returning to Upcoming starts collapsed again */
+        shownCount = PREVIEW_COUNT;   /* returning to Upcoming starts collapsed again */
         Array.prototype.forEach.call(chips, function (x) {
           x.setAttribute("aria-pressed", String(x === c));
         });
