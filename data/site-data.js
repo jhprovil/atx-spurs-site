@@ -22,12 +22,15 @@ window.AUSTIN_SPURS = {
   settings: {
     email: "austinspurs@gmail.com",
 
-    /* Paste your Google Form EMBED url here (Form > Send > <> icon > copy the
-       src="..." value only). Until you do, the site shows setup instructions
-       plus an email fallback, so nothing looks broken. */
-    googleFormEmbedUrl: "",
+    /* Signing up runs through Tottenham, because Austin Spurs is an official
+       supporters club and the club keeps the member roster. This URL is the
+       one thing that has to be right for the join page to work. */
+    officialClubUrl: "https://www.tottenhamhotspur.com/supporters-clubs/872970/austin-spurs",
 
-    /* Optional: public link to the same form, used for the "open in new tab" link */
+    /* Superseded by officialClubUrl. Left in place because if Spurs ever change
+       how membership works, a Google Form is the fallback: paste an embed URL
+       here and the join page switches back to showing a form. */
+    googleFormEmbedUrl: "",
     googleFormShareUrl: "",
 
     venue: {
