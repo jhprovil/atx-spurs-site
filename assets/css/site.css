@@ -945,6 +945,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .c2c-club svg { width: 20px; height: 20px; flex: none; }
 .c2c-fixture { gap: .45rem; }
 .c2c-v { opacity: .6; font-size: .8em; }
+/* Zero-height full-width flex item: takes up a whole line, draws nothing, and
+   pushes everything after it to the next row. */
+.c2c-break { flex-basis: 100%; height: 0; margin: 0; }
 .c2c-hero__lede { color: rgba(255,255,255,.9); max-width: 52ch; font-size: 1.05rem; }
 
 .c2c-hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.9rem; }
