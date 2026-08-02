@@ -370,9 +370,9 @@
           '<h2 style="font-size:1.7rem">Sign Up Through Spurs</h2>' +
           '<div class="rule"></div>' +
           '<p>' +
-            'Austin Spurs is an official Tottenham Hotspur supporters club, so the ' +
-            'club keeps the member list. Joining takes a minute and happens on ' +
-            'their site rather than ours.' +
+            'Austin Spurs is an official Tottenham Hotspur supporters club, so email ' +
+            'signup starts with them. It takes a minute and happens on their site ' +
+            'rather than ours.' +
           '</p>' +
           '<p>' +
             'Follow the link, then hit <b>Join Club</b> on the Austin Spurs page. ' +
