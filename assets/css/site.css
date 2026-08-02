@@ -923,12 +923,28 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   margin-bottom: .3em;
 }
 .c2c-hero h1 em { font-style: normal; display: block; color: var(--c2c-yellow); }
+/* These four facts were a row of small uppercase words that read as a caption
+   under the headline. Giving each its own plate makes them scannable — date,
+   fixture, time and place register separately instead of as one grey line. */
 .c2c-hero__meta {
-  display: flex; flex-wrap: wrap; gap: .55rem 1.6rem;
-  margin: 0 0 1.3rem;
-  font-weight: 700; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--c2c-amber);
+  display: flex; flex-wrap: wrap; gap: .6rem;
+  margin: 0 0 1.6rem;
+  font-weight: 800; font-size: .92rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--c2c-yellow);
 }
+.c2c-hero__meta > span {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .52rem .85rem;
+  background: rgba(0, 10, 61, .82);
+  border: 1.5px solid rgba(247, 94, 9, .6);
+  border-radius: 3px;
+}
+/* Club roundels sit on the text baseline, so they need to be flex children
+   rather than inline images — an inline SVG would drag the line height. */
+.c2c-club { display: inline-flex; align-items: center; gap: .4rem; }
+.c2c-club svg { width: 20px; height: 20px; flex: none; }
+.c2c-fixture { gap: .45rem; }
+.c2c-v { opacity: .6; font-size: .8em; }
 .c2c-hero__lede { color: rgba(255,255,255,.9); max-width: 52ch; font-size: 1.05rem; }
 
 .c2c-hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.9rem; }
