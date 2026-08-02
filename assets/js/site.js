@@ -347,35 +347,68 @@
   }
 
   /* ---------------------------------------------------------------
-     Google Form embed (or setup instructions if not configured yet)
+     Join panel
+
+     Three states, in order of preference:
+       1. officialClubUrl  — the real one. Membership runs through Tottenham
+                             because we're an official supporters club.
+       2. googleFormEmbedUrl — fallback if the club ever changes how this works.
+       3. plain email       — so the page is never a dead end.
      --------------------------------------------------------------- */
   function initForm() {
     var mount = document.getElementById("form-mount");
     if (!mount) return;
     var s = DATA.settings || {};
-    var url = (s.googleFormEmbedUrl || "").trim();
+    var email = s.email || "austinspurs@gmail.com";
+    var clubUrl = (s.officialClubUrl || "").trim();
+    var formUrl = (s.googleFormEmbedUrl || "").trim();
 
-    if (url) {
+    if (clubUrl) {
       mount.innerHTML =
-        '<iframe src="' + escapeHtml(url) + '" title="Austin Spurs mailing list signup" ' +
+        '<div class="form-fallback">' +
+          '<p class="eyebrow">Official supporters club</p>' +
+          '<h2 style="font-size:1.7rem">Sign Up Through Spurs</h2>' +
+          '<div class="rule"></div>' +
+          '<p>' +
+            'Austin Spurs is an official Tottenham Hotspur supporters club, so the ' +
+            'club keeps the member list. Joining takes a minute and happens on ' +
+            'their site rather than ours.' +
+          '</p>' +
+          '<p>' +
+            'Follow the link, then hit <b>Join Club</b> on the Austin Spurs page. ' +
+            "You'll need a Spurs account if you don't already have one. It's free." +
+          '</p>' +
+          '<p style="margin-top:1.8rem">' +
+            '<a class="btn" href="' + escapeHtml(clubUrl) + '" target="_blank" rel="noopener">' +
+              'Join at tottenhamhotspur.com <span class="arw" aria-hidden="true">&rarr;</span>' +
+            '</a>' +
+          '</p>' +
+          '<p style="margin-top:1.6rem;font-size:.9rem;color:var(--muted)">' +
+            'Stuck, or would rather not make an account? Email ' +
+            '<a data-email href="mailto:' + escapeHtml(email) + '?subject=Join%20Austin%20Spurs">' +
+              escapeHtml(email) + '</a> and we\'ll sort it out.' +
+          '</p>' +
+        '</div>';
+      return;
+    }
+
+    if (formUrl) {
+      mount.innerHTML =
+        '<iframe src="' + escapeHtml(formUrl) + '" title="Austin Spurs mailing list signup" ' +
         'frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>';
       return;
     }
 
-    var email = s.email || "austinspurs@gmail.com";
     mount.innerHTML =
       '<div class="form-fallback">' +
-        '<p class="eyebrow">Form not connected yet</p>' +
-        '<h2 style="font-size:1.7rem">Two minutes to switch this on</h2>' +
-        '<ol>' +
-          '<li>Sign in to Google as <code>' + escapeHtml(email) + '</code> and create a new Form. Ask for name, email, and “How did you hear about us?”.</li>' +
-          '<li>In the Form, open <b>Responses</b> and turn on email notifications so submissions hit the inbox.</li>' +
-          '<li>Click <b>Send</b>, choose the <b>&lt; &gt;</b> embed tab, and copy the <code>src="…"</code> URL.</li>' +
-          '<li>Open <code>data/site-data.js</code> and paste it into <code>googleFormEmbedUrl</code>. Save, refresh.</li>' +
-        '</ol>' +
-        '<p style="margin-top:1.6rem">In the meantime, anyone can reach us the old-fashioned way:</p>' +
-        '<a class="btn" href="mailto:' + escapeHtml(email) + '?subject=Join%20Austin%20Spurs">' +
-          'Email ' + escapeHtml(email) + ' <span class="arw">&rarr;</span></a>' +
+        '<p class="eyebrow">Get in touch</p>' +
+        '<h2 style="font-size:1.7rem">Drop Us A Line</h2>' +
+        '<div class="rule"></div>' +
+        '<p>Send us a note and we\'ll add you by hand.</p>' +
+        '<p style="margin-top:1.8rem">' +
+          '<a class="btn" href="mailto:' + escapeHtml(email) + '?subject=Join%20Austin%20Spurs">' +
+            'Email ' + escapeHtml(email) + ' <span class="arw" aria-hidden="true">&rarr;</span></a>' +
+        '</p>' +
       '</div>';
   }
 
