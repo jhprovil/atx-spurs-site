@@ -271,12 +271,34 @@ Only the first is in use; the other two exist so the page can never be a dead en
 - **The privacy line names Tottenham.** It used to say "we keep the list to
   ourselves," which stopped being true the moment signup moved to the club.
 
-**Open question, unresolved:** whether joining through the club actually hands
-Austin Spurs the member email addresses, or whether Tottenham keeps the roster.
-The site currently describes what the list covers without claiming who sends it.
-If Spurs don't pass addresses along, the whole "we'll tell you about Tramps"
-premise needs a channel we control. Ask Chuck Hoffman (listed as chairman on the
-club page).
+### How a signup actually reaches us
+
+```
+Someone hits "Join Club" on the Tottenham page
+   ↓
+Tottenham emails austinspurs@gmail.com with the new member
+   ↓
+Somebody on our side adds them to the Austin Spurs list   ← manual
+   ↓
+They start getting our emails
+```
+
+So we do hold the addresses and we do send the emails. The copy on `join.html`
+is accurate as written.
+
+**The middle step is manual, and that's the fragile part.** Nothing on the
+website can tell whether it happened. If nobody is watching austinspurs@gmail.com,
+signups sit in the inbox and the person hears nothing — having done everything
+right and, from their side, joined successfully. That failure is silent and the
+person who suffers it has no way to report it.
+
+Two things worth pinning down, neither of which the site can solve:
+
+- **Where does "the list" live?** Mailchimp, a spreadsheet, Gmail contacts?
+  Unrecorded so far. It matters for anyone picking this up.
+- **Who watches the inbox, and how quickly?** Coast to Coast on 22 Aug 2026 is
+  the first real test — one event driving more signups in a weekend than the
+  usual trickle, all needing manual entry.
 
 ---
 
