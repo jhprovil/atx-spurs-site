@@ -602,6 +602,31 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   object-position: center;
 }
 
+/* Hover: the photo drifts in behind its own frame while the shadow deepens.
+   The zoom lives on the image, not the figure, because .reveal already owns
+   the figure's transform and the two would fight. .figure clips, so the scale
+   stays inside the 3:2 box.
+
+   The transition here has to restate opacity and transform: this selector
+   outranks .reveal, and a transition declaration replaces rather than merges,
+   so omitting them would kill the fade-in on scroll.
+
+   Guarded to real hover devices — on touch a tap latches the state and leaves
+   the photo stuck at 1.05. */
+@media (hover: hover) {
+  .media-row .figure {
+    transition: opacity .7s ease, transform .7s ease, box-shadow .45s ease;
+  }
+  .media-row .figure img {
+    transition: transform .6s cubic-bezier(.2, .6, .2, 1);
+    will-change: transform;
+  }
+  .media-row .figure:hover {
+    box-shadow: 0 26px 52px -20px rgba(5, 12, 30, .58);
+  }
+  .media-row .figure:hover img { transform: scale(1.05); }
+}
+
 .figure figcaption {
   padding: .85rem 1.1rem;
   font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
