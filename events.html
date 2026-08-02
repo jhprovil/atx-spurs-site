@@ -110,9 +110,16 @@
             </svg>Brentford</span>
           <span class="c2c-v">v</span>
           <span class="c2c-club">
+            <!-- White over navy, the shirt-and-shorts split. A navy ring on a
+                 navy chip disappeared and left what looked like a plain white
+                 dot; the split holds at 20px. -->
             <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="11" fill="#132257"/>
-              <circle cx="12" cy="12" r="8.2" fill="#FFFFFF"/>
+              <defs><clipPath id="rndThfc"><circle cx="12" cy="12" r="11"/></clipPath></defs>
+              <g clip-path="url(#rndThfc)">
+                <rect width="24" height="24" fill="#FFFFFF"/>
+                <rect y="13.2" width="24" height="10.8" fill="#132257"/>
+              </g>
+              <circle cx="12" cy="12" r="11" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity=".85"/>
             </svg>Spurs</span>
         </span>
         <span>11:30 AM CT</span>
