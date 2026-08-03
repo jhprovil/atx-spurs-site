@@ -34,7 +34,7 @@ Find the fixture, change `tramps`:
 | value | light | what it says on the site |
 |---|---|---|
 | `"open"` | green | Tramps is on. Turn up. |
-| `"closed"` | red | No group showing for this one. |
+| `"closed"` | red | We're not showing this one at Tramps. |
 | `"tbd"` | amber | Not decided yet. |
 
 Add an optional one-line `note:` to any fixture and it appears under the match.

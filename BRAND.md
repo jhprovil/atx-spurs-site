@@ -8,7 +8,7 @@ unless Joe says otherwise.
 
 ## 1. The one-line positioning
 
-**Austin's official Tottenham Hotspur supporters group.** Not a watch party, not
+**Austin's official Tottenham Hotspur supporters club.** Not a watch party, not
 a bar promotion. Everything on the site should read like it was written by
 someone who goes, for other people who might go.
 
@@ -237,7 +237,7 @@ matching from one platform to another gets it wrong — that's exactly how the
 wrong Facebook link shipped.
 
 **Rule: verify every new handle, link, listing or API result actually points at
-the supporters group before using it.** Don't infer from another platform.
+the supporters club before using it.** Don't infer from another platform.
 
 Also affected:
 - **Search results** — "Austin Spurs" alone returns the basketball team first
@@ -292,13 +292,16 @@ signups sit in the inbox and the person hears nothing — having done everything
 right and, from their side, joined successfully. That failure is silent and the
 person who suffers it has no way to report it.
 
-Two things worth pinning down, neither of which the site can solve:
+**Logan, the chair, watches austinspurs@gmail.com and does the adding.** Joe has
+suggested he automate it; whether that happens is Logan's call, so assume it is
+manual until told otherwise.
 
-- **Where does "the list" live?** Mailchimp, a spreadsheet, Gmail contacts?
-  Unrecorded so far. It matters for anyone picking this up.
-- **Who watches the inbox, and how quickly?** Coast to Coast on 22 Aug 2026 is
-  the first real test — one event driving more signups in a weekend than the
-  usual trickle, all needing manual entry.
+Still unrecorded: **where "the list" physically lives** — Mailchimp, a
+spreadsheet, Gmail contacts? It matters for whoever picks this up next.
+
+Coast to Coast on 22 Aug 2026 is the first real load test of the manual step:
+one event driving more signups in a weekend than the usual trickle, all needing
+hand entry, during the weekend everyone is busy running the event.
 
 ---
 
