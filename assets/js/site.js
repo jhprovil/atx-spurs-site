@@ -67,12 +67,19 @@
        for its actual travel, so hero__crest at 0.85 covers ~440px.
        POINTER_TRAVEL: pixels of drift from one edge of the hero to the other. */
     /* Both cut hard (was 520 / 70) because the crest is now sized to read as
-       the crest rather than as a fragment. A more visible mark has less room
-       to move before an edge shows: ~110px of overhang on an 800px hero, and
-       the numbers below spend ~93px of it. Raise these and the crest's top
-       edge will slide into frame mid-scroll. */
-    var SCROLL_TRAVEL  = 165;
-    var POINTER_TRAVEL = 60;
+       the crest rather than as a fragment, and a more visible mark has less
+       room to move before an edge shows.
+
+       The budget is the crest's vertical overhang, which is 14% of hero height
+       at either end — measured at 83px on a 603px hero. These numbers spend
+       58px of it (42 scroll + 15 pointer), leaving 25px.
+
+       Sized against a SHORT hero on purpose: the overhang scales with the hero
+       but this travel is fixed pixels, so a shallow viewport is the case that
+       breaks first. An earlier pass used 165/60, which fit an 800px hero and
+       overran a real 603px one. */
+    var SCROLL_TRAVEL  = 100;
+    var POINTER_TRAVEL = 40;
 
     /* Narrow screens get roughly a third of the travel. Three reasons: there's
        far less room before a layer's edge enters frame, mobile browsers resize
@@ -80,7 +87,7 @@
        scroll), and large transforms on every scroll frame are the main cause of
        jank on phones. */
     function scrollTravel() {
-      return (window.innerWidth || 1200) <= 760 ? 110 : SCROLL_TRAVEL;
+      return (window.innerWidth || 1200) <= 760 ? 70 : SCROLL_TRAVEL;
     }
 
     /* Pointer drift is a mouse affordance. On touch, pointermove fires during
@@ -373,11 +380,11 @@
     if (clubUrl) {
       mount.innerHTML =
         '<div class="form-fallback">' +
-          '<p class="eyebrow">Official supporters group</p>' +
+          '<p class="eyebrow">Official supporters club</p>' +
           '<h2 style="font-size:1.7rem">Sign Up Through Spurs</h2>' +
           '<div class="rule"></div>' +
           '<p>' +
-            'Austin Spurs is an official Tottenham Hotspur supporters group, so email ' +
+            'Austin Spurs is an official Tottenham Hotspur supporters club, so email ' +
             'signup starts with them. It takes a minute and happens on their site ' +
             'rather than ours.' +
           '</p>' +
