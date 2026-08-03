@@ -318,23 +318,36 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 /* The layers travel up to ~440px on scroll plus pointer drift, so the stage is
    oversized well beyond the hero. This slack is what keeps their edges outside
    the frame the whole way. */
+/* Slack reduced from -45% -14%: travel is much shorter now, and the horizontal
+   drift is gone entirely, so the layers no longer need that much room to move
+   without their edges sliding into frame. */
 .hero__stage {
-  position: absolute; inset: -45% -14%;
+  position: absolute; inset: -34% -8%;
   z-index: 0;
   pointer-events: none;
 }
 .hero__layer { will-change: transform; position: absolute; inset: 0; }
 
-/* The crest, sized off hero height so it scales with the section.
-   It bleeds off the right edge on purpose — the parallax shifts it up to
-   ~40px, and a hard edge sliding into view would give the trick away. */
+/* Height is a percentage of .hero__stage, not the hero — and the stage is
+   ~168% of hero height. So 76% here puts the crest at roughly 1.28x the hero,
+   cropped about 14% top and bottom.
+
+   That number went DOWN from 104% to make the crest MORE readable, which reads
+   backwards until you do the arithmetic: at 104% the crest stood at nearly
+   twice the hero's height, so all you ever saw was a fragment of a much larger
+   shape. Smaller crest, more of the mark in frame.
+
+   14% overhang is also the travel budget. The crest can move ±110px on an
+   800px hero before an edge shows, and the parallax uses ~93px of that. If you
+   increase SCROLL_TRAVEL or POINTER_TRAVEL in site.js, shrink this number to
+   match or the top edge will slide into view mid-scroll. */
 .hero__crest {
-  height: 104%;
+  height: 76%;
   width: auto;
-  top: 50%; left: auto; right: -4%;
+  top: 50%; left: auto; right: -1%;
   transform-origin: center;
   translate: 0 -50%;
-  opacity: .17;
+  opacity: .26;
   filter: drop-shadow(0 0 60px rgba(230,205,139,.25));
 }
 
@@ -348,11 +361,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
    site.js, which also drops on narrow screens).
    ----------------------------------------------------------------------- */
 @media (max-width: 760px) {
-  .hero__stage { inset: -60% -40%; }
+  .hero__stage { inset: -40% -14%; }
   .hero__crest {
-    height: 135%;
-    right: -26%;
-    opacity: .15;
+    height: 72%;
+    right: -6%;
+    opacity: .2;
   }
   /* Vertical hairlines are noise at this width and can't be perceived moving. */
   .hero__rules { display: none; }
@@ -1039,8 +1052,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .c2c-strip__link {
   width: var(--shell); margin-inline: auto;
   display: flex; align-items: center; flex-wrap: wrap;
-  gap: .55rem 1.15rem;
-  padding: .8rem 0;
+  gap: .6rem 1.3rem;
+  padding: 1.15rem 0;
   color: var(--c2c-navy);
   text-decoration: none;
 }
@@ -1048,13 +1061,13 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   flex: none;
   background: var(--c2c-navy); color: var(--c2c-yellow);
   font-family: var(--font-body);
-  font-size: .62rem; font-weight: 800;
+  font-size: .68rem; font-weight: 800;
   letter-spacing: .14em; text-transform: uppercase;
-  padding: .3rem .6rem; border-radius: 2px;
+  padding: .36rem .7rem; border-radius: 2px;
 }
 .c2c-strip__text {
   font-family: var(--font-display);
-  font-size: 1.12rem; line-height: 1.15;
+  font-size: 1.34rem; line-height: 1.15;
   letter-spacing: var(--display-track);
   text-transform: uppercase;
 }
@@ -1062,7 +1075,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .c2c-strip__cta {
   margin-left: auto;
   font-family: var(--font-body);
-  font-size: .76rem; font-weight: 800;
+  font-size: .82rem; font-weight: 800;
   letter-spacing: .12em; text-transform: uppercase;
   border-bottom: 2px solid var(--c2c-navy);
   padding-bottom: .1rem;
