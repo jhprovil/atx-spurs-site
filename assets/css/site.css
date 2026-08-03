@@ -1020,6 +1020,70 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
    navy-and-brass entirely and runs the event's own palette top to bottom.
    Deliberate: it's a landing page for one thing, on one date.
    ========================================================================== */
+/* ==========================================================================
+   COAST TO COAST STRIP — homepage, between the nav and the hero
+
+   The event palette is normally fenced to coast-to-coast.html and the events
+   hero (see BRAND.md §3). This is a deliberate, time-boxed exception: the
+   strip deletes itself the day after the event, so the loudness has an expiry.
+
+   The gradient is the poster's sunset read left to right. Text is c2c-navy,
+   not white — navy clears 4.5:1 on all three stops (5.26 at the worst), white
+   fails on all three (3.20 on the orange).
+   ========================================================================== */
+.c2c-strip {
+  background: linear-gradient(95deg,
+    var(--c2c-red) 0%, var(--c2c-orange) 42%, var(--c2c-amber) 100%);
+  border-bottom: 3px solid var(--c2c-navy);
+}
+.c2c-strip__link {
+  width: var(--shell); margin-inline: auto;
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: .55rem 1.15rem;
+  padding: .8rem 0;
+  color: var(--c2c-navy);
+  text-decoration: none;
+}
+.c2c-strip__tag {
+  flex: none;
+  background: var(--c2c-navy); color: var(--c2c-yellow);
+  font-family: var(--font-body);
+  font-size: .62rem; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: .3rem .6rem; border-radius: 2px;
+}
+.c2c-strip__text {
+  font-family: var(--font-display);
+  font-size: 1.12rem; line-height: 1.15;
+  letter-spacing: var(--display-track);
+  text-transform: uppercase;
+}
+.c2c-strip__text b { font-weight: 800; }
+.c2c-strip__cta {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: .76rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  border-bottom: 2px solid var(--c2c-navy);
+  padding-bottom: .1rem;
+  white-space: nowrap;
+}
+.c2c-strip__cta .arw { transition: transform .2s ease; display: inline-block; }
+@media (hover: hover) {
+  .c2c-strip__link:hover .c2c-strip__cta .arw { transform: translateX(4px); }
+}
+.c2c-strip__link:focus-visible {
+  outline: 3px solid var(--c2c-navy);
+  outline-offset: -4px;
+}
+/* Stacked on narrow screens: the CTA loses its auto margin and sits under the
+   headline rather than being squeezed against it. */
+@media (max-width: 720px) {
+  .c2c-strip__link { padding: .75rem 0; }
+  .c2c-strip__text { font-size: 1rem; }
+  .c2c-strip__cta { margin-left: 0; }
+}
+
 .c2c-page { background: var(--c2c-navy); }
 
 .c2c-band {
