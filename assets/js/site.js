@@ -66,8 +66,13 @@
        enters the viewport to the moment it leaves. Multiply by the layer's depth
        for its actual travel, so hero__crest at 0.85 covers ~440px.
        POINTER_TRAVEL: pixels of drift from one edge of the hero to the other. */
-    var SCROLL_TRAVEL  = 520;
-    var POINTER_TRAVEL = 70;
+    /* Both cut hard (was 520 / 70) because the crest is now sized to read as
+       the crest rather than as a fragment. A more visible mark has less room
+       to move before an edge shows: ~110px of overhang on an 800px hero, and
+       the numbers below spend ~93px of it. Raise these and the crest's top
+       edge will slide into frame mid-scroll. */
+    var SCROLL_TRAVEL  = 165;
+    var POINTER_TRAVEL = 60;
 
     /* Narrow screens get roughly a third of the travel. Three reasons: there's
        far less room before a layer's edge enters frame, mobile browsers resize
@@ -75,14 +80,17 @@
        scroll), and large transforms on every scroll frame are the main cause of
        jank on phones. */
     function scrollTravel() {
-      return (window.innerWidth || 1200) <= 760 ? 180 : SCROLL_TRAVEL;
+      return (window.innerWidth || 1200) <= 760 ? 110 : SCROLL_TRAVEL;
     }
 
     /* Pointer drift is a mouse affordance. On touch, pointermove fires during
        a scroll drag, which adds movement nobody asked for. */
     var finePointer = window.matchMedia("(pointer: fine)").matches;
 
-    var pointerX = 0, pointerY = 0, ticking = false;
+    /* Vertical only. Horizontal drift was removed deliberately — with the crest
+       sitting close to the right edge there is very little sideways room, and
+       the sideways motion was the part that gave the effect away. */
+    var pointerY = 0, ticking = false;
 
     function render() {
       ticking = false;
@@ -104,10 +112,9 @@
         p = Math.max(0, Math.min(1, p));
 
         var ty = (p - 0.5) * travel * d * -1;
-        var tx = pointerX * d * POINTER_TRAVEL;
         ty += pointerY * d * (POINTER_TRAVEL * 0.45);
 
-        el.style.transform = "translate3d(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px,0)";
+        el.style.transform = "translate3d(0," + ty.toFixed(1) + "px,0)";
       }
     }
     function queue() {
@@ -120,8 +127,8 @@
     /* Pointer drift is tracked on the whole document so the hero keeps reacting
        once the cursor moves past it, instead of snapping back to centre. */
     document.addEventListener("pointermove", function (e) {
-      var vw = window.innerWidth || 1200, vh2 = window.innerHeight || 800;
-      pointerX = (e.clientX / vw) - 0.5;
+      if (!finePointer) return;
+      var vh2 = window.innerHeight || 800;
       pointerY = (e.clientY / vh2) - 0.5;
       queue();
     }, { passive: true });
