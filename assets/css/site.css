@@ -344,7 +344,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .hero__crest {
   height: 76%;
   width: auto;
-  top: 50%; left: auto; right: -1%;
+  /* Sits inside the right edge rather than bleeding past it. At -1% about 122px
+     of the crest's width was being cut off, and losing a fifth of the mark
+     sideways on top of the vertical crop is what made it read as an abstract
+     shape instead of a cockerel. The vertical crop alone does the "never quite
+     whole" job. */
+  top: 50%; left: auto; right: 4%;
   transform-origin: center;
   translate: 0 -50%;
   opacity: .26;
