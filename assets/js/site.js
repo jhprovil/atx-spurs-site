@@ -366,11 +366,11 @@
     if (clubUrl) {
       mount.innerHTML =
         '<div class="form-fallback">' +
-          '<p class="eyebrow">Official supporters club</p>' +
+          '<p class="eyebrow">Official supporters group</p>' +
           '<h2 style="font-size:1.7rem">Sign Up Through Spurs</h2>' +
           '<div class="rule"></div>' +
           '<p>' +
-            'Austin Spurs is an official Tottenham Hotspur supporters club, so email ' +
+            'Austin Spurs is an official Tottenham Hotspur supporters group, so email ' +
             'signup starts with them. It takes a minute and happens on their site ' +
             'rather than ours.' +
           '</p>' +
@@ -416,19 +416,56 @@
      Featured event banner (Events page)
      --------------------------------------------------------------- */
   function initFeatured() {
-    var mount = document.getElementById("featured-banner");
+    var mount = document.getElementById("c2c-strip");
     if (!mount) return;
     var e = DATA.featuredEvent;
     if (!e || !e.active) { mount.remove(); return; }
+
+    /* Retire itself the day after the event. The active flag is the manual
+       override; this is the safety net for when nobody remembers to flip it.
+       String compare works because both sides are ISO yyyy-mm-dd. */
+    var today = (DATA.settings && DATA.settings.todayOverride) || isoToday();
+    if (e.date && today > e.date) { mount.remove(); return; }
+
+    /* Short date for the strip — the full dateLabel is too long for one line
+       next to a headline and a call to action. */
+    var shortDate = e.date ? formatStripDate(e.date) : "";
+
     mount.innerHTML =
-      '<div class="flag-banner__inner">' +
-        '<div>' +
-          '<span class="flag-banner__tag">' + escapeHtml(e.tag) + '</span>' +
-          '<h2>' + escapeHtml(e.title) + '</h2>' +
-          '<p><b>' + escapeHtml(e.dateLabel) + '</b> &middot; ' + escapeHtml(e.blurb) + '</p>' +
-        '</div>' +
-        '<a class="btn" href="' + escapeHtml(e.ctaHref) + '">' + escapeHtml(e.ctaLabel) + ' <span class="arw">&rarr;</span></a>' +
-      '</div>';
+      '<a class="c2c-strip__link" href="' + escapeHtml(e.ctaHref) + '">' +
+        '<span class="c2c-strip__tag">' + escapeHtml(e.tag) + '</span>' +
+        '<span class="c2c-strip__text">' +
+          (shortDate ? '<b>' + escapeHtml(shortDate) + '</b> &middot; ' : '') +
+          escapeHtml(e.title) + ' at ' + escapeHtml(venueShortName()) +
+        '</span>' +
+        '<span class="c2c-strip__cta">' + escapeHtml(e.ctaLabel) +
+          ' <span class="arw" aria-hidden="true">&rarr;</span></span>' +
+      '</a>';
+    mount.hidden = false;
+  }
+
+  function isoToday() {
+    var d = new Date();
+    return d.getFullYear() + "-" +
+           String(d.getMonth() + 1).padStart(2, "0") + "-" +
+           String(d.getDate()).padStart(2, "0");
+  }
+
+  function formatStripDate(iso) {
+    var MONTHS = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+    var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var p = iso.split("-");
+    /* Built as a local date, not parsed from the string — new Date("2026-08-22")
+       is treated as UTC and lands on the 21st in Austin. */
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return DAYS[d.getDay()].slice(0, 3) + " " + d.getDate() + " " + MONTHS[d.getMonth()];
+  }
+
+  function venueShortName() {
+    var v = (DATA.settings && DATA.settings.venue) || {};
+    /* "Mister Tramps Sports Pub & Cafe" is too long for a one-line strip. */
+    return (v.name || "Mister Tramps").split(" Sports")[0];
   }
 
   /* ---------------------------------------------------------------
