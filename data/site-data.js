@@ -88,11 +88,12 @@ window.AUSTIN_SPURS = {
   fixtures: [
     { date: "2026-08-22", opponent: "Brentford",            venue: "A", comp: "Premier League", uk: "5.30pm", ct: "11:30 AM", tramps: "open",
       note: "Premier League Coast to Coast Kick Off — the big one. Doors early, full house expected.", featured: true },
-    { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "open" },
+    { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
 
     { date: "2026-09-05", opponent: "Nottingham Forest",    venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "open" },
-    { date: "2026-09-12", opponent: "Everton",              venue: "H", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
-    { date: "2026-09-19", opponent: "Aston Villa",          venue: "H", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
+    { date: "2026-09-12", opponent: "Everton",              venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "tbd" },
+    { date: "2026-09-19", opponent: "Aston Villa",          venue: "H", comp: "Premier League", uk: "12.30pm",    ct: "6:30 AM",  tramps: "tbd",
+      note: "Early one — 6:30am in Austin. Tramps opening time to be confirmed." },
 
     { date: "2026-10-10", opponent: "Manchester United",    venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
     { date: "2026-10-17", opponent: "Coventry City",        venue: "H", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
