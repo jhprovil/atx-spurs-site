@@ -347,8 +347,12 @@
   function initNextMatch() {
     var mount = document.getElementById("next-match");
     if (!mount) return;
+
+    /* All competitions, not just the league. This used to filter to Premier
+       League, which meant a cup tie could sit on the events page while the
+       homepage skipped straight past it — the two pages disagreed about what
+       was next. The homepage must show the genuine next three. */
     var list = DATA.fixtures.slice()
-      .filter(function (f) { return f.comp === "Premier League"; })
       .sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); })
       .filter(isUpcoming);
     if (!list.length) {
