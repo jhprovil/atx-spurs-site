@@ -96,7 +96,7 @@ window.AUSTIN_SPURS = {
        which is a default slot rather than a real midweek cup kickoff, so times
        stay TBC until the EFL confirms them. */
     { date: "2026-08-25", opponent: "Charlton Athletic",    venue: "H", comp: "Carabao Cup", uk: "TBC", ct: "TBC", tramps: "tbd",
-      note: "Carabao Cup second round at home. Kickoff time still to be confirmed." },
+      note: "Carabao Cup second round at home." },
     { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
 
     { date: "2026-09-05", opponent: "Nottingham Forest",    venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "open" },
