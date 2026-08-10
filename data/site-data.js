@@ -53,6 +53,7 @@ window.AUSTIN_SPURS = {
       instagram: "https://instagram.com/austinspurs",
       facebook:  "https://www.facebook.com/groups/austinspurs/",
       x:         "https://x.com/austinspurs",
+      bluesky:   "https://bsky.app/profile/austinspurs.bsky.social",
       tiktok:    ""
     },
 
