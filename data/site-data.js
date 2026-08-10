@@ -75,8 +75,11 @@ window.AUSTIN_SPURS = {
     date: "2026-08-22",
     dateLabel: "Saturday, August 22, 2026",
     blurb: "The Premier League picked one venue per club across the United States for opening weekend. Tottenham Hotspur's is right here in Austin, at Mister Tramps.",
-    ctaLabel: "Event details",
-    ctaHref: "coast-to-coast.html"
+    /* Label follows the link. It said "Event details" when this pointed at
+       coast-to-coast.html; pointing that wording at a registration form would
+       be a bait and switch. */
+    ctaLabel: "Register",
+    ctaHref: "https://flowsto.com/COnx51sJX"
   },
 
   /* ---------------------------------------------------------------
