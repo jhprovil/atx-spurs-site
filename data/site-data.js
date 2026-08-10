@@ -91,12 +91,12 @@ window.AUSTIN_SPURS = {
   fixtures: [
     { date: "2026-08-22", opponent: "Brentford",            venue: "A", comp: "Premier League", uk: "5.30pm", ct: "11:30 AM", tramps: "open",
       note: "Premier League Coast to Coast Kick Off — the big one. Doors early, full house expected.", featured: true },
-    /* We enter the Carabao Cup at Round Two — no European football this season.
-       Draw is 10 Aug, tie falls in the week of 24 Aug. Date below is a
-       placeholder so the week isn't blank; replace it with the real date and
-       opponent once the draw is made. */
-    { date: "2026-08-26", opponent: "Carabao Cup Round Two", venue: "?", comp: "Carabao Cup", uk: "TBC", ct: "TBC", tramps: "tbd",
-      note: "Opponent and date confirmed after the 10 August draw. Expect it midweek, week of 24 August." },
+    /* Drawn 10 Aug 2026. We enter at Round Two — no European football this
+       season. Date and opponent confirmed; the club's fixture list shows 3pm UK,
+       which is a default slot rather than a real midweek cup kickoff, so times
+       stay TBC until the EFL confirms them. */
+    { date: "2026-08-25", opponent: "Charlton Athletic",    venue: "H", comp: "Carabao Cup", uk: "TBC", ct: "TBC", tramps: "tbd",
+      note: "Carabao Cup second round at home. Kickoff time still to be confirmed." },
     { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
 
     { date: "2026-09-05", opponent: "Nottingham Forest",    venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "open" },
