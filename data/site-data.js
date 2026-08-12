@@ -91,11 +91,10 @@ window.AUSTIN_SPURS = {
   fixtures: [
     { date: "2026-08-22", opponent: "Brentford",            venue: "A", comp: "Premier League", uk: "5.30pm", ct: "11:30 AM", tramps: "open",
       note: "Premier League Coast to Coast Kick Off — the big one. Doors early, full house expected.", featured: true },
-    /* Drawn 10 Aug 2026. We enter at Round Two — no European football this
-       season. Date and opponent confirmed; the club's fixture list shows 3pm UK,
-       which is a default slot rather than a real midweek cup kickoff, so times
-       stay TBC until the EFL confirms them. */
-    { date: "2026-08-25", opponent: "Charlton Athletic",    venue: "H", comp: "Carabao Cup", uk: "TBC", ct: "TBC", tramps: "tbd",
+    /* Drawn 10 Aug 2026, kickoff confirmed after. We enter at Round Two — no
+       European football this season. Note the date moved from the 25th to the
+       26th when the EFL set the time. 7.45pm BST is 1:45 PM in Austin. */
+    { date: "2026-08-26", opponent: "Charlton Athletic",    venue: "H", comp: "Carabao Cup", uk: "7.45pm", ct: "1:45 PM", tramps: "tbd",
       note: "Carabao Cup second round at home." },
     { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
 
