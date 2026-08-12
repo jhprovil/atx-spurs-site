@@ -94,7 +94,7 @@ window.AUSTIN_SPURS = {
     /* Drawn 10 Aug 2026, kickoff confirmed after. We enter at Round Two — no
        European football this season. Note the date moved from the 25th to the
        26th when the EFL set the time. 7.45pm BST is 1:45 PM in Austin. */
-    { date: "2026-08-26", opponent: "Charlton Athletic",    venue: "H", comp: "Carabao Cup", uk: "7.45pm", ct: "1:45 PM", tramps: "tbd",
+    { date: "2026-08-26", opponent: "Charlton Athletic",    venue: "H", comp: "Carabao Cup", uk: "7.45pm", ct: "1:45 PM", tramps: "open",
       note: "Carabao Cup second round at home." },
     { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
 
