@@ -34,6 +34,87 @@
   }
 
   /* ---------------------------------------------------------------
+     Merch dropdown
+
+     Two behaviours from one piece of state (data-open on .nav-menu):
+
+       wide layout  — closed by default. CSS opens it on hover; this adds
+                      click and keyboard, so it works without a pointer.
+       burger sheet — open by default and stays open. Joe asked for both
+                      links visible with no extra tap, and the sheet is
+                      already a vertical list, so nothing is gained by
+                      hiding them. The button still works as a real
+                      disclosure if someone wants to collapse it.
+
+     The default is re-applied on breakpoint change, because a menu left
+     closed on desktop would otherwise arrive collapsed in the burger sheet
+     after a rotate or resize — which is exactly the hidden-behind-a-tap
+     outcome we're avoiding.
+     --------------------------------------------------------------- */
+  function initNavMenus() {
+    var menus = document.querySelectorAll(".nav-menu");
+    if (!menus.length) return;
+    var narrow = window.matchMedia("(max-width: 900px)");
+
+    function setOpen(menu, open) {
+      menu.setAttribute("data-open", String(open));
+      var btn = menu.querySelector(".nav-menu__btn");
+      if (btn) btn.setAttribute("aria-expanded", String(open));
+    }
+
+    function applyDefault() {
+      Array.prototype.forEach.call(menus, function (menu) {
+        setOpen(menu, narrow.matches);
+      });
+    }
+
+    Array.prototype.forEach.call(menus, function (menu) {
+      var btn = menu.querySelector(".nav-menu__btn");
+      if (!btn) return;
+
+      btn.addEventListener("click", function () {
+        setOpen(menu, menu.getAttribute("data-open") !== "true");
+      });
+
+      /* Wide layout only: leaving the whole item closes it. Guarded on the
+         menu, not the button, so crossing the gap into the panel doesn't
+         shut it in your face. */
+      menu.addEventListener("mouseleave", function () {
+        if (!narrow.matches) setOpen(menu, false);
+      });
+
+      /* Tabbing out of the last item closes it. relatedTarget is null when
+         focus leaves the document entirely, which should not count. */
+      menu.addEventListener("focusout", function (e) {
+        if (narrow.matches) return;
+        if (e.relatedTarget && !menu.contains(e.relatedTarget)) setOpen(menu, false);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape" || narrow.matches) return;
+        if (menu.getAttribute("data-open") !== "true") return;
+        setOpen(menu, false);
+        btn.focus();
+      });
+    });
+
+    /* A click anywhere else closes any open menu. */
+    document.addEventListener("click", function (e) {
+      if (narrow.matches) return;
+      Array.prototype.forEach.call(menus, function (menu) {
+        if (!menu.contains(e.target)) setOpen(menu, false);
+      });
+    });
+
+    /* addEventListener on a MediaQueryList is the modern form; addListener is
+       the deprecated one older Safari still needs. */
+    if (narrow.addEventListener) narrow.addEventListener("change", applyDefault);
+    else if (narrow.addListener) narrow.addListener(applyDefault);
+
+    applyDefault();
+  }
+
+  /* ---------------------------------------------------------------
      Social links — hrefs come from settings.social in site-data.js.
      An empty url greys the tile out as "coming soon".
      --------------------------------------------------------------- */
@@ -511,6 +592,7 @@
   /* --------------------------------------------------------------- */
   function boot() {
     initNav();
+    initNavMenus();
     initSocial();
     initParallax();
     initReveal();
