@@ -69,7 +69,7 @@ window.AUSTIN_SPURS = {
          Set "active": false to hide the banner after it passes.
      --------------------------------------------------------------- */
   featuredEvent: {
-    active: true,
+    active: false,
     tag: "Opening Weekend",
     title: "Premier League Coast to Coast Kick Off",
     date: "2026-08-22",
@@ -89,8 +89,6 @@ window.AUSTIN_SPURS = {
          "tramps": open | closed | tbd
      --------------------------------------------------------------- */
   fixtures: [
-    { date: "2026-08-22", opponent: "Brentford",            venue: "A", comp: "Premier League", uk: "5.30pm", ct: "11:30 AM", tramps: "open",
-      note: "Premier League Coast to Coast Kick Off — the big one. Doors early, full house expected.", featured: true },
     /* Drawn 10 Aug 2026, kickoff confirmed after. We enter at Round Two — no
        European football this season. Note the date moved from the 25th to the
        26th when the EFL set the time. 7.45pm BST is 1:45 PM in Austin. */
