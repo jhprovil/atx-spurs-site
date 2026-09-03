@@ -97,19 +97,19 @@ window.AUSTIN_SPURS = {
     { date: "2026-08-29", opponent: "Newcastle United",     venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
 
     { date: "2026-09-05", opponent: "Nottingham Forest",    venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "open" },
-    { date: "2026-09-12", opponent: "Everton",              venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "tbd" },
+    { date: "2026-09-12", opponent: "Everton",              venue: "H", comp: "Premier League", uk: "5.30pm",    ct: "11:30 AM",  tramps: "open" },
+    { date: "2026-09-15", opponent: "Liverpool",             venue: "A", comp: "Carabao Cup", uk: "8pm",    ct: "2:00 PM",  tramps: "open",
+      note: "Carabao Cup third round at Anfield." },
     { date: "2026-09-19", opponent: "Aston Villa",          venue: "H", comp: "Premier League", uk: "12.30pm",    ct: "6:30 AM",  tramps: "tbd",
       note: "Early one — 6:30am in Austin. Tramps opening time to be confirmed." },
-    /* Only happens if we win the Round Two tie. Placeholder date. */
-    { date: "2026-09-23", opponent: "Carabao Cup Round Three", venue: "?", comp: "Carabao Cup", uk: "TBC", ct: "TBC", tramps: "tbd",
-      note: "Only if we get through Round Two. Date and opponent to be confirmed." },
 
-    { date: "2026-10-10", opponent: "Manchester United",    venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
-    { date: "2026-10-17", opponent: "Coventry City",        venue: "H", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
-    { date: "2026-10-24", opponent: "Chelsea",              venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
+    { date: "2026-10-10", opponent: "Manchester United",    venue: "A", comp: "Premier League", uk: "5.30pm", ct: "11:30 AM", tramps: "open" },
+    { date: "2026-10-19", opponent: "Coventry City",        venue: "H", comp: "Premier League", uk: "8pm",    ct: "2:00 PM",  tramps: "tbd",
+      note: "Moved to Monday night." },
+    { date: "2026-10-24", opponent: "Chelsea",              venue: "A", comp: "Premier League", uk: "5.30pm", ct: "11:30 AM", tramps: "tbd" },
     { date: "2026-10-28", opponent: "Carabao Cup Round Four", venue: "?", comp: "Carabao Cup", uk: "TBC", ct: "TBC", tramps: "tbd" },
-    { date: "2026-10-31", opponent: "Crystal Palace",       venue: "H", comp: "Premier League", uk: "3pm",    ct: "10:00 AM", tramps: "tbd",
-      note: "UK clocks change this weekend — kickoff shifts an hour later in Austin." },
+    { date: "2026-10-31", opponent: "Crystal Palace",       venue: "H", comp: "Premier League", uk: "5.30pm", ct: "12:30 PM", tramps: "tbd",
+      note: "UK clocks change this weekend, and kickoff moved to 5.30pm UK — Austin time lands at 12:30pm." },
 
     { date: "2026-11-07", opponent: "Leeds United",         venue: "A", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
     { date: "2026-11-21", opponent: "Ipswich Town",         venue: "H", comp: "Premier League", uk: "3pm",    ct: "9:00 AM",  tramps: "tbd" },
