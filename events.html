@@ -43,8 +43,8 @@
             Merch <span class="nav-menu__chev" aria-hidden="true"></span>
           </button>
           <ul class="nav-menu__list" id="merch-menu">
-            <li><a href="https://swagsta.com/collections/austin-spurs">Austin Spurs Merch</a></li>
-            <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">PL Coast-to-Coast Merch</a></li>
+            <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">Austin Spurs Originals</a></li>
+            <li><a href="https://swagsta.com/collections/austin-spurs">Official Supporters' Store</a></li>
           </ul>
         </li>
         <li><a href="ticket-requests.html">Ticket Requests</a></li>
@@ -57,21 +57,42 @@
 
 <main id="main">
 
-<!-- =========================== FIXTURE LIST =========================== -->
-<section class="section">
-  <div class="shell">
+<!-- =========================== HERO ===========================
+     Same treatment as the ticket requests page: .page-hero--photo, whose
+     deepened scrim was tuned against a crowd shot so the headline still
+     clears the large-text contrast threshold over bright faces.
 
-    <p class="eyebrow">2026/27 Season</p>
-    <h2 class="section__title" id="fixtures">Upcoming Fixtures</h2>
-    <div class="rule"></div>
+     Swapping the photo is a one-line change — drop a file into assets/img/
+     and point the src at it.
 
-    <p class="section__lede" style="margin-bottom:1.8rem">
+     The heading keeps id="fixtures" because tramps.html links to
+     events.html#fixtures. It was an h2 with no h1 on the page at all; as the
+     page's own title it is now an h1.
+
+     The lede's "join the email list" link was inline-styled navy, which is
+     near-invisible on this ground. It is brass here instead.
+     ============================================================= -->
+<section class="page-hero page-hero--photo">
+  <div class="page-hero__art" aria-hidden="true">
+    <img src="assets/img/inside-the-ground.jpg" width="1200" height="800" alt=""
+         fetchpriority="high">
+  </div>
+  <div class="page-hero__content">
+    <p class="eyebrow eyebrow--light">2026/27 Season</p>
+    <h1 class="page-hero__title" id="fixtures">Upcoming Fixtures</h1>
+    <p class="page-hero__lede">
       Every match below is listed in Central time. The light tells you whether Tramps
       is open, closed, or still to be confirmed. If it's amber, check back closer to
       kickoff or
-      <a href="join.html" style="color:var(--navy-700);font-weight:700">join the email list</a>
+      <a href="join.html" style="color:var(--brass-lt);font-weight:700">join the email list</a>
       and we'll tell you.
     </p>
+  </div>
+</section>
+
+<!-- =========================== FIXTURE LIST =========================== -->
+<section class="section section--pad-top-sm">
+  <div class="shell">
 
     <!-- The colour legend was removed: each fixture already states its status
          in words next to the lamp, so the legend was explaining something the
@@ -161,8 +182,8 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="events.html">Events &amp; fixtures</a></li>
-          <li><a href="https://swagsta.com/collections/austin-spurs">Austin Spurs Merch</a></li>
-          <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">PL Coast-to-Coast Merch</a></li>
+          <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">Austin Spurs Originals</a></li>
+          <li><a href="https://swagsta.com/collections/austin-spurs">Official Supporters' Store</a></li>
           <li><a href="ticket-requests.html">Ticket Requests</a></li>
           <li><a href="tramps.html">Our Pub</a></li>
           <li><a href="join.html">Join the list</a></li>

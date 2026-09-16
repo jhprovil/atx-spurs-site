@@ -74,8 +74,8 @@
             Merch <span class="nav-menu__chev" aria-hidden="true"></span>
           </button>
           <ul class="nav-menu__list" id="merch-menu">
-            <li><a href="https://swagsta.com/collections/austin-spurs">Austin Spurs Merch</a></li>
-            <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">PL Coast-to-Coast Merch</a></li>
+            <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">Austin Spurs Originals</a></li>
+            <li><a href="https://swagsta.com/collections/austin-spurs">Official Supporters' Store</a></li>
           </ul>
         </li>
         <li><a href="ticket-requests.html">Ticket Requests</a></li>
@@ -131,35 +131,33 @@
 </section>
 
 <!-- =========================== TICKETS ===========================
-     The photo bleeds off the LEFT edge of the viewport and the band's own navy
-     washes across its right side, so the image emerges from the band rather
-     than sitting in a box on top of it. Flipped from right to left on Joe's
-     call, 16 Sep 2026 — if it flips back, the mask direction, the media inset
-     and .tix-band__copy's grid-column all have to move together.
+     Uses the shared .photo-band component (see the CSS). Photo left, copy
+     right, photo bleeding off the viewport edge and dissolving into the band
+     where the two meet.
 
-     The wash is a gradient overlay in the band colour, not mask-image: it
-     renders identically everywhere and degrades to a plain dark photo rather
-     than a hard rectangle if anything about it fails.
+     Flipped from right to left on Joe's call, 16 Sep 2026. If it ever flips
+     back, do it with the .photo-band--media-right modifier rather than by
+     editing the base rules — that modifier moves the media inset, the mask
+     direction and the copy's grid column together, which is the only way they
+     stay consistent.
 
-     The left-hand grid cell is deliberately empty. It is a spacer that keeps
-     the copy out of the photo, so the layout needs no percentage arithmetic
-     tuned to one viewport width.
-
-     Copy is evergreen on purpose: no block counts, no dates, nothing that
-     needs revisiting when the allocation or the schedule changes.
+     Copy is Joe's, used as written. No eyebrow here on purpose: his title and
+     subtitle already do the job an eyebrow/title pair does elsewhere, and
+     keeping "Home matches" above them put "home match" three times in four
+     lines. Deliberately evergreen — no block counts, no dates.
      ================================================================ -->
-<section class="tix-band" aria-labelledby="tix-heading">
-  <div class="tix-band__media" aria-hidden="true">
+<section class="photo-band" aria-labelledby="tix-heading">
+  <div class="photo-band__media" aria-hidden="true">
     <img src="assets/img/inside-the-ground.jpg" width="1200" height="800" loading="lazy" alt="">
   </div>
-  <div class="tix-band__inner">
+  <div class="photo-band__inner">
     <!-- Joe's copy, 16 Sep 2026, used as written. No eyebrow here on purpose:
          his title and subtitle already do the job an eyebrow/title pair does
          elsewhere, and keeping "Home matches" above them put "home match"
          three times in four lines. -->
-    <div class="tix-band__copy">
+    <div class="photo-band__copy">
       <h2 id="tix-heading">Ticket Requests</h2>
-      <p class="tix-band__sub">Request your tickets to a Tottenham home match</p>
+      <p class="photo-band__sub">Request your tickets to a Tottenham home match</p>
       <p>
         As an official supporters club, Austin Spurs can request tickets to home
         matches on your behalf. Check out the link below to learn more.
@@ -204,6 +202,35 @@
         </a>
       </li>
     </ul>
+  </div>
+</section>
+
+<!-- =========================== WATCH WITH US ===========================
+     PREPPED, NOT LIVE. Remove the `hidden` attribute below to publish it.
+
+     Waiting on photos from Joe (16 Sep 2026). The image in place is a stand-in
+     from the matchday set so the layout can be judged; swap the src, width,
+     height and alt when the real one lands. The copy is real and in voice, so
+     it is safe if this ships before anyone rewrites it.
+
+     Mirror of the tickets band: same .photo-band component plus
+     --media-right, so the photo sits on the opposite side and the page
+     alternates as you scroll.
+     ====================================================================== -->
+<section class="photo-band photo-band--media-right" aria-labelledby="watch-heading" hidden>
+  <div class="photo-band__media" aria-hidden="true">
+    <img src="assets/img/pre-match-singalong.jpg" width="1200" height="800" loading="lazy" alt="">
+  </div>
+  <div class="photo-band__inner">
+    <div class="photo-band__copy">
+      <h2 id="watch-heading">Watch With Us</h2>
+      <p class="photo-band__sub">Every match, on the right screen, at Mister Tramps</p>
+      <p>
+        Doors open early, the sound is on our game, and there is room to sit
+        down. Visiting supporters and first-timers are equally welcome.
+      </p>
+      <a class="btn" href="tramps.html">More on Mr. Tramps <span class="arw" aria-hidden="true">&rarr;</span></a>
+    </div>
   </div>
 </section>
 
@@ -280,8 +307,8 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="events.html">Events &amp; fixtures</a></li>
-          <li><a href="https://swagsta.com/collections/austin-spurs">Austin Spurs Merch</a></li>
-          <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">PL Coast-to-Coast Merch</a></li>
+          <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">Austin Spurs Originals</a></li>
+          <li><a href="https://swagsta.com/collections/austin-spurs">Official Supporters' Store</a></li>
           <li><a href="ticket-requests.html">Ticket Requests</a></li>
           <li><a href="tramps.html">Our Pub</a></li>
           <li><a href="join.html">Join the list</a></li>

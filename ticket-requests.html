@@ -43,8 +43,8 @@
             Merch <span class="nav-menu__chev" aria-hidden="true"></span>
           </button>
           <ul class="nav-menu__list" id="merch-menu">
-            <li><a href="https://swagsta.com/collections/austin-spurs">Austin Spurs Merch</a></li>
-            <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">PL Coast-to-Coast Merch</a></li>
+            <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">Austin Spurs Originals</a></li>
+            <li><a href="https://swagsta.com/collections/austin-spurs">Official Supporters' Store</a></li>
           </ul>
         </li>
         <li><a href="ticket-requests.html" aria-current="page">Ticket Requests</a></li>
@@ -103,6 +103,60 @@
 </div>
 
 <main id="main">
+
+<!-- =========================== GALLERY ===========================
+     Moved above the eligibility section on Joe's call, 16 Sep 2026: the
+     community should read first, before the rules and the paperwork.
+
+     Horizontal scroller, desktop only by Joe's call: it is atmosphere rather
+     than information, and on a phone it would compete with the page's actual
+     job. Scroll-snap plus the arrow buttons; the buttons hide themselves when
+     there is nothing left to scroll to.
+
+     To add photos, drop files in assets/img/ and copy a <figure> block. Six to
+     eight reads best. Every image needs real alt text and its width/height, or
+     the row reflows as each one loads.
+     ================================================================ -->
+<section class="section section--paper gallery-section section--pad-top-sm section--pad-bot-sm" id="gallery" aria-label="Matchday photos">
+  <div class="shell">
+    <div class="gallery-head">
+      <div>
+        <p class="eyebrow">Matchdays</p>
+        <h2 class="section__title" style="margin-bottom:0">On The Day</h2>
+      </div>
+      <div class="gallery-nav">
+        <button class="gallery-btn" type="button" data-dir="-1" aria-label="Scroll photos left">&larr;</button>
+        <button class="gallery-btn" type="button" data-dir="1" aria-label="Scroll photos right">&rarr;</button>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-rail" id="gallery-rail" tabindex="0" aria-label="Photo strip, scrollable">
+    <figure class="gallery-item">
+      <img src="assets/img/austin-spurs-scarf-pitchside.jpg" width="1200" height="800" loading="lazy"
+           alt="Austin Spurs members at the front of the stand inside Tottenham Hotspur Stadium, holding an Austin Spurs scarf along the front row before kickoff.">
+    </figure>
+    <figure class="gallery-item">
+      <img src="assets/img/son-mural-n17.jpg" width="1200" height="960" loading="lazy"
+           alt="A mural of Son Heung-min covering the side of a building near the stadium, lettered Sonny Spurs Legend.">
+    </figure>
+    <figure class="gallery-item">
+      <img src="assets/img/pre-match-singalong.jpg" width="1200" height="800" loading="lazy"
+           alt="A packed bar before a match, drinks and arms in the air while someone leads a song from the front.">
+    </figure>
+    <figure class="gallery-item">
+      <img src="assets/img/stadium-concourse.jpg" width="1024" height="768" loading="lazy"
+           alt="Five supporters leaning in for a selfie on the stadium concourse, food stalls and a queue behind them.">
+    </figure>
+    <figure class="gallery-item">
+      <img src="assets/img/inside-the-ground.jpg" width="1200" height="800" loading="lazy"
+           alt="The view from the upper stand at Tottenham Hotspur Stadium with the match under way and the ground full.">
+    </figure>
+    <figure class="gallery-item">
+      <img src="assets/img/group-dinner-london.jpg" width="1024" height="768" loading="lazy"
+           alt="Austin Spurs members along one long table at dinner in London, pints poured and a lit street through the window.">
+    </figure>
+  </div>
+</section>
 
 <!-- =========================== ELIGIBILITY =========================== -->
 <section class="section section--pad-bot-sm" id="eligibility">
@@ -996,7 +1050,7 @@
 </aside>
 
 <!-- =========================== FLAG BEARERS =========================== -->
-<section class="section section--pad-bot-xs" id="flag-bearers">
+<section class="section section--flag" id="flag-bearers">
   <div class="shell">
     <div class="section-head section-head--last">
       <div class="section-head__title">
@@ -1013,57 +1067,6 @@
         </p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- =========================== GALLERY ===========================
-     Horizontal scroller, desktop only by Joe's call: it is atmosphere rather
-     than information, and on a phone it would compete with the page's actual
-     job. Scroll-snap plus the arrow buttons; the buttons hide themselves when
-     there is nothing left to scroll to.
-
-     To add photos, drop files in assets/img/ and copy a <figure> block. Six to
-     eight reads best. Every image needs real alt text and its width/height, or
-     the row reflows as each one loads.
-     ================================================================ -->
-<section class="section section--paper gallery-section section--pad-top-xs section--pad-bot-xs" id="gallery" aria-label="Matchday photos">
-  <div class="shell">
-    <div class="gallery-head">
-      <div>
-        <p class="eyebrow">Matchdays</p>
-        <h2 class="section__title" style="margin-bottom:0">On The Day</h2>
-      </div>
-      <div class="gallery-nav">
-        <button class="gallery-btn" type="button" data-dir="-1" aria-label="Scroll photos left">&larr;</button>
-        <button class="gallery-btn" type="button" data-dir="1" aria-label="Scroll photos right">&rarr;</button>
-      </div>
-    </div>
-  </div>
-  <div class="gallery-rail" id="gallery-rail" tabindex="0" aria-label="Photo strip, scrollable">
-    <figure class="gallery-item">
-      <img src="assets/img/austin-spurs-scarf-pitchside.jpg" width="1200" height="800" loading="lazy"
-           alt="Austin Spurs members at the front of the stand inside Tottenham Hotspur Stadium, holding an Austin Spurs scarf along the front row before kickoff.">
-    </figure>
-    <figure class="gallery-item">
-      <img src="assets/img/son-mural-n17.jpg" width="1200" height="960" loading="lazy"
-           alt="A mural of Son Heung-min covering the side of a building near the stadium, lettered Sonny Spurs Legend.">
-    </figure>
-    <figure class="gallery-item">
-      <img src="assets/img/pre-match-singalong.jpg" width="1200" height="800" loading="lazy"
-           alt="A packed bar before a match, drinks and arms in the air while someone leads a song from the front.">
-    </figure>
-    <figure class="gallery-item">
-      <img src="assets/img/stadium-concourse.jpg" width="1024" height="768" loading="lazy"
-           alt="Five supporters leaning in for a selfie on the stadium concourse, food stalls and a queue behind them.">
-    </figure>
-    <figure class="gallery-item">
-      <img src="assets/img/inside-the-ground.jpg" width="1200" height="800" loading="lazy"
-           alt="The view from the upper stand at Tottenham Hotspur Stadium with the match under way and the ground full.">
-    </figure>
-    <figure class="gallery-item">
-      <img src="assets/img/group-dinner-london.jpg" width="1024" height="768" loading="lazy"
-           alt="Austin Spurs members along one long table at dinner in London, pints poured and a lit street through the window.">
-    </figure>
   </div>
 </section>
 
@@ -1255,8 +1258,8 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="events.html">Events &amp; fixtures</a></li>
-          <li><a href="https://swagsta.com/collections/austin-spurs">Austin Spurs Merch</a></li>
-          <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">PL Coast-to-Coast Merch</a></li>
+          <li><a href="https://swagsta.com/collections/austin-spurs-local-club-designs">Austin Spurs Originals</a></li>
+          <li><a href="https://swagsta.com/collections/austin-spurs">Official Supporters' Store</a></li>
           <li><a href="ticket-requests.html">Ticket Requests</a></li>
           <li><a href="tramps.html">Our Pub</a></li>
           <li><a href="join.html">Join the list</a></li>

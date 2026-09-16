@@ -740,17 +740,17 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .section--pad-bot-sm { padding-bottom: clamp(2.8rem, 5.6vw, 4.8rem); }
 .section--pad-top-xs { padding-top: clamp(1.6rem, 3vw, 2.4rem); }
 .section--pad-bot-xs { padding-bottom: clamp(1.6rem, 3vw, 2.4rem); }
-/* A section trimmed to hug the gallery needs its closing padding back once the
-   gallery is out of the flow, or it butts straight into whatever follows. That
-   happens below 900px, where the gallery is hidden by width. The [hidden]
-   variant of this rule is kept so the section can be pulled again without the
-   padding breaking. */
-.section--pad-bot-xs:has(+ .gallery-section[hidden]) {
-  padding-bottom: clamp(2.8rem, 5.6vw, 4.8rem);
-}
-@media (max-width: 900px) {
-  .section--pad-bot-xs:has(+ .gallery-section) { padding-bottom: clamp(2.8rem, 5.6vw, 4.8rem); }
-}
+/* The two :has(+ .gallery-section) rules that used to live here are gone. They
+   restored a trimmed section's closing padding because the gallery sat right
+   after it and vanished below 900px. The gallery moved above the eligibility
+   section on 16 Sep 2026, so nothing is adjacent to it any more and both rules
+   were dead. Flag bearers, the section they existed for, now uses
+   .section--flag below. */
+
+/* Junior flag bearers. It used to run a full top padding against a trimmed
+   bottom one, which read as sitting high in its own band. Same total height on
+   desktop as before, split evenly: 6rem + 2.4rem became 4.2rem each side. */
+.section--flag { padding-block: clamp(2.55rem, 5.25vw, 4.2rem); }
 .section__title { font-size: clamp(2rem, 4vw, 3.1rem); margin-bottom: .6em; }
 
 /* ==========================================================================
@@ -768,8 +768,27 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 @media (min-width: 1040px) {
   .section-head {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: clamp(2rem, 4.5vw, 4rem);
+    /* Tightened on Joe's call, 16 Sep 2026, from 1fr/1.1fr with a
+       clamp(2rem, 4.5vw, 4rem) gap, because the lede read as floating loose on
+       the right rather than belonging to its heading.
+
+       The title column is a WIDTH, not a fraction, and that is the point. The
+       four headings wrap at different places, so with fractional columns the
+       optical gap between the end of the heading's text and the start of the
+       lede swung between 28px and 267px depending on which line happened to be
+       longest. Nothing reads as deliberate at that spread. A fixed column
+       anchors every lede to the same x instead, so they line up down the page
+       even though the headings above them do not.
+
+       470px is the floor because "Send A Request" is the widest single line and
+       drops to two below it. The 33vw term lets the column grow on very wide
+       displays, where the longer headings need the room to stay on one line;
+       the 660px cap only stops it running away beyond that.
+
+       Measured against the old values: at 1440 the Deadlines gap went 234px to
+       125px, Junior 267 to 159, Send 163 to 54, and no heading gained a line. */
+    grid-template-columns: minmax(0, clamp(470px, 33vw, 660px)) minmax(0, 1fr);
+    gap: 1.9rem;
     align-items: end;
   }
   .section-head .rule { margin-bottom: 0; }
@@ -1425,121 +1444,119 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
    The brass top rule is the same language the footer uses, so it separates
    without introducing a new idea. */
 /* ==========================================================================
-   TICKETS BAND (home)
+   PHOTO BAND
 
-   Photo on the right, bleeding off the viewport edge; the band's navy washes
-   over its left side so the two read as one surface. Text sits in the left
-   half of the shell and the right grid cell is an empty spacer, which is what
-   keeps the copy clear of the photo without tuning percentages per width.
+   A full-bleed band with a photo on one side and copy on the other. The photo
+   runs off the edge of the VIEWPORT, not the shell, and dissolves into the
+   band where it meets the copy.
+
+   Default is photo LEFT. Add .photo-band--media-right to mirror it. Three
+   things move together in that modifier and they cannot be split: the media's
+   inset, the mask direction, and which grid column the copy occupies.
+
+   The fade is a MASK on the photo, not a coloured overlay. An overlay has to
+   name a colour, and the band's background is a vertical gradient — so an
+   overlay matching its top was visibly mismatched at the bottom, which read as
+   a hard seam down the photo's edge. Masking removes the photo's own pixels
+   and lets the band's real gradient show through, so there is nothing to
+   match. Where mask-image is unsupported the photo shows a square edge, which
+   is plain rather than broken.
+
+   The copy sits in one grid column and the other is left EMPTY as a spacer.
+   That is what keeps text off the photo without percentage arithmetic tuned to
+   a single viewport width.
    ========================================================================== */
-.tix-band {
+.photo-band {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* No order juggling needed: the media is first in the markup and now leads
-     on both layouts — left-hand column at desktop, top strip when stacked —
-     so DOM order and reading order already agree. */
   background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%);
   border-top: 3px solid var(--brass);
   border-bottom: 1px solid rgba(200, 162, 74, .3);
   color: var(--bone);
   padding-block: clamp(2.8rem, 5.4vw, 4.6rem);
 }
-.tix-band h2 { color: var(--bone); font-size: clamp(2rem, 4vw, 3.1rem); margin-bottom: .3em; }
-.tix-band p { color: var(--bone); opacity: .92; margin: 0 0 1rem; max-width: 52ch; }
-/* The subtitle sits between the title and the body, so it needs to outrank the
-   body without competing with the title: brass rather than bone, and a step up
-   in size.
+.photo-band h2 { color: var(--bone); font-size: clamp(2rem, 4vw, 3.1rem); margin-bottom: .3em; }
+.photo-band p { color: var(--bone); opacity: .92; margin: 0 0 1rem; max-width: 52ch; }
+.photo-band .btn { margin-top: .6rem; }
 
-   Scoped `.tix-band .tix-band__sub` and not a bare `.tix-band__sub`. The rule
-   above it, `.tix-band p`, is (0,1,1) and would beat a bare class at (0,1,0),
-   silently — colour and margin would just not apply. This is the same trap as
-   `.site-nav ul` over `.nav-menu__list`. Scoping wins it at (0,2,0) without
-   reaching for !important. */
-.tix-band .tix-band__sub {
+/* The subtitle outranks the body without competing with the title.
+   Scoped `.photo-band .photo-band__sub`, not a bare class: `.photo-band p`
+   above is (0,1,1) and would beat a bare class at (0,1,0) silently — colour
+   and margin simply would not apply. Same trap as `.site-nav ul` over
+   `.nav-menu__list`. Scoping wins it at (0,2,0) without !important. */
+.photo-band .photo-band__sub {
   color: var(--brass-lt);
   opacity: 1;
   font-size: clamp(1.1rem, 1.7vw, 1.36rem);
   line-height: 1.35;
   margin-bottom: 1.1rem;
-  /* 34ch stranded "match" on a line of its own. 46ch is the full string, so it
-     holds one line in the desktop copy column and wraps naturally on a phone;
-     balance keeps that wrap even rather than leaving another orphan. */
   max-width: 46ch;
   text-wrap: balance;
 }
-.tix-band .btn { margin-top: .6rem; }
 
-.tix-band__inner {
+.photo-band__inner {
   position: relative; z-index: 1;
   width: var(--shell); margin-inline: auto;
 }
 
-/* The fade is a MASK on the photo, not a coloured overlay on top of it.
-   An overlay has to name a colour, and the band's background is a vertical
-   gradient from navy-800 to navy-900 — so an overlay matching the top left it
-   visibly mismatched at the bottom, which read as a hard vertical seam down
-   the photo's left edge. Masking removes the photo's own pixels instead and
-   lets the band's real gradient show through, so there is nothing to match.
-
-   Where mask-image is unsupported the photo simply shows with a square edge,
-   which is plain rather than broken. */
-.tix-band__media { position: relative; margin-bottom: 1.8rem; }
-.tix-band__media img {
+/* Stacked: photo above the copy, fading in from the band's ceiling. */
+.photo-band__media { position: relative; margin-bottom: 1.8rem; }
+.photo-band__media img {
   display: block; width: 100%; aspect-ratio: 16 / 9;
   object-fit: cover; object-position: center 38%;
-  /* Stacked: the strip sits above the copy, so it fades in from the band's
-     ceiling and is solid by the time it meets the heading. */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 18%, #000 50%);
           mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 18%, #000 50%);
 }
-.tix-band__media::after {
+.photo-band__media::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to top, rgba(5, 12, 30, .4) 0%, transparent 38%);
 }
 
 @media (min-width: 900px) {
-  /* Media out of the flow and hard against the LEFT edge of the VIEWPORT, not
-     the shell, which is what makes it bleed. It ends at 46% from the right so
-     the fade has room to cover the overlap with the copy column. */
-  .tix-band__media {
-    position: absolute; inset: 0 46% 0 0; margin-bottom: 0; z-index: 0;
-  }
-  /* Sideways: the photo dissolves into the band across its RIGHT third, where
-     it meets the copy. Two stops of partial alpha rather than one linear ramp,
-     so the falloff is slow where it meets the copy and quicker once clear. */
-  .tix-band__media img {
+  .photo-band__media { position: absolute; inset: 0 46% 0 0; margin-bottom: 0; z-index: 0; }
+  .photo-band__media img {
     height: 100%; aspect-ratio: auto;
+    /* Two stops of partial alpha rather than one ramp: slow falloff where it
+       meets the copy, quicker once clear of it. */
     -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,.18) 12%, rgba(0,0,0,.72) 30%, #000 52%);
             mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,.18) 12%, rgba(0,0,0,.72) 30%, #000 52%);
   }
-  /* Only a corner weight, no edge colour: the mask owns the blend. */
-  .tix-band__media::after {
+  .photo-band__media::after {
     background: linear-gradient(to top, rgba(5, 12, 30, .42) 0%, transparent 34%);
   }
-  .tix-band__inner {
+  .photo-band__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    /* Spacer column is the wider one. At an even split the copy started ~36px
+       inside the photo's edge, sitting on the tail of the fade, which read as
+       crowding the image. */
+    grid-template-columns: minmax(0, 1.14fr) minmax(0, .86fr);
     gap: clamp(1.6rem, 3vw, 2.8rem);
     align-items: center;
   }
-  /* Copy placed explicitly in column two; column one is left empty as the
-     spacer that keeps the text off the photo. Placing it by grid-column rather
-     than with a pseudo-element spacer means there is no empty box to reason
-     about and no dependence on pseudo-element source order. */
-  .tix-band__copy { grid-column: 2; }
+  .photo-band__copy { grid-column: 2; }
+
+  /* Mirrored: photo right, copy left. */
+  .photo-band--media-right .photo-band__media { inset: 0 0 0 46%; }
+  .photo-band--media-right .photo-band__media img {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.18) 12%, rgba(0,0,0,.72) 30%, #000 52%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.18) 12%, rgba(0,0,0,.72) 30%, #000 52%);
+  }
+  .photo-band--media-right .photo-band__inner {
+    grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  }
+  .photo-band--media-right .photo-band__copy { grid-column: 1; }
 }
 
 @media (hover: hover) {
-  /* A slow, small push on the photo when the whole band is hovered: enough to
-     say the band is one object and clickable-adjacent, not enough to read as
-     a carousel or to move text. */
-  .tix-band__media img { transition: transform .5s ease; }
-  .tix-band:hover .tix-band__media img { transform: scale(1.03); }
+  /* A slow, small push on the photo when the band is hovered: enough to say
+     the band is one object, not enough to read as a carousel or move text. */
+  .photo-band__media img { transition: transform .5s ease; }
+  .photo-band:hover .photo-band__media img { transform: scale(1.03); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tix-band__media img { transition: none; }
-  .tix-band:hover .tix-band__media img { transform: none; }
+  .photo-band__media img { transition: none; }
+  .photo-band:hover .photo-band__media img { transform: none; }
 }
 
 .social-band {
