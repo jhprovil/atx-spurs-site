@@ -152,15 +152,19 @@
        room to move before an edge shows.
 
        The budget is the crest's vertical overhang, which is 14% of hero height
-       at either end — measured at 83px on a 603px hero. These numbers spend
-       58px of it (42 scroll + 15 pointer), leaving 25px.
+       at either end. The hero was cut 25% on 16 Sep 2026 to
+       clamp(420px, 64.5vh, 615px), so the shortest case is now 420px and the
+       budget there is ~58px, where it used to be ~77px on a 560px hero.
+
+       These numbers were cut by the same 25% to match: they spend ~45px of it
+       (32 scroll + 13 pointer), leaving ~13px on the shortest hero.
 
        Sized against a SHORT hero on purpose: the overhang scales with the hero
        but this travel is fixed pixels, so a shallow viewport is the case that
        breaks first. An earlier pass used 165/60, which fit an 800px hero and
-       overran a real 603px one. */
-    var SCROLL_TRAVEL  = 100;
-    var POINTER_TRAVEL = 40;
+       overran a real 603px one. **If the hero height changes, re-derive these.** */
+    var SCROLL_TRAVEL  = 75;
+    var POINTER_TRAVEL = 30;
 
     /* Narrow screens get roughly a third of the travel. Three reasons: there's
        far less room before a layer's edge enters frame, mobile browsers resize
@@ -168,7 +172,7 @@
        scroll), and large transforms on every scroll frame are the main cause of
        jank on phones. */
     function scrollTravel() {
-      return (window.innerWidth || 1200) <= 760 ? 70 : SCROLL_TRAVEL;
+      return (window.innerWidth || 1200) <= 760 ? 52 : SCROLL_TRAVEL;
     }
 
     /* Pointer drift is a mouse affordance. On touch, pointermove fires during
