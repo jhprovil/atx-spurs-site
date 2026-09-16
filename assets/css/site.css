@@ -613,6 +613,17 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   width: var(--shell); margin-inline: auto;
   padding: 4.5rem 0 4rem;
 }
+/* Photo variant. The base scrim was tuned for the flat navy art layer; over a
+   crowd shot the right-hand end of the headline was landing on bright faces at
+   about 2.8:1. Deepened stops take it to ~3.5:1, which clears the large-text
+   threshold, and the photo still reads through at 68%. Scoped to this page so
+   the other heroes keep the lighter wash. */
+.page-hero--photo::before {
+  background:
+    linear-gradient(100deg, rgba(5, 12, 30, .96) 0%, rgba(5, 12, 30, .86) 42%, rgba(5, 12, 30, .68) 100%),
+    linear-gradient(0deg, rgba(5, 12, 30, .4) 0%, rgba(5, 12, 30, .12) 100%);
+}
+
 .page-hero__title { font-size: clamp(2.5rem, 6vw, 4.6rem); color: var(--bone); }
 .page-hero__lede { max-width: 56ch; color: rgba(245,242,234,.85); margin-bottom: 0; }
 
@@ -708,9 +719,79 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .section--navy { background: var(--navy-800); color: var(--bone); }
 .section--navy h2, .section--navy h3 { color: var(--bone); }
 .section--paper { background: var(--bone-2); }
+/* Trims, where two stacked section paddings left more air than the content
+   wanted. sm is about 20% off; xs is the big cut between flag bearers and the
+   gallery, which were nearly 200px apart. */
+.section--pad-top-sm { padding-top: clamp(2.8rem, 5.6vw, 4.8rem); }
+.section--pad-bot-sm { padding-bottom: clamp(2.8rem, 5.6vw, 4.8rem); }
+.section--pad-top-xs { padding-top: clamp(1.6rem, 3vw, 2.4rem); }
+.section--pad-bot-xs { padding-bottom: clamp(1.6rem, 3vw, 2.4rem); }
+/* A section trimmed to hug the gallery needs its closing padding back once the
+   gallery is out of the flow, or it butts straight into whatever follows. That
+   happens below 900px, where the gallery is hidden by width. The [hidden]
+   variant of this rule is kept so the section can be pulled again without the
+   padding breaking. */
+.section--pad-bot-xs:has(+ .gallery-section[hidden]) {
+  padding-bottom: clamp(2.8rem, 5.6vw, 4.8rem);
+}
+@media (max-width: 900px) {
+  .section--pad-bot-xs:has(+ .gallery-section) { padding-bottom: clamp(2.8rem, 5.6vw, 4.8rem); }
+}
 .section__title { font-size: clamp(2rem, 4vw, 3.1rem); margin-bottom: .6em; }
+
+/* ==========================================================================
+   SECTION HEAD — title block on the left, its lede beside it.
+
+   Why: a 54-60ch lede under a heading leaves the right half of a 1220px shell
+   empty, which is what reads as "crammed to the left" on a desktop. Pairing
+   them uses the width without stretching any line of text past a comfortable
+   measure. Stacks back to one column under 1040px, where there is no width to
+   spare and the original order is the right one.
+   ========================================================================== */
+.section-head { margin-bottom: 2.2rem; }
+.section-head--last, .shell > .section-head:last-child { margin-bottom: 0; }
+
+@media (min-width: 1040px) {
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 4.5vw, 4rem);
+    align-items: end;
+  }
+  .section-head .rule { margin-bottom: 0; }
+  .section-head__title { padding-bottom: .1rem; }
+
+  /* Let the aside fill its column. A 54ch cap inside a ~690px column wrapped
+     short copy into a narrow three-line stack while leaving ~180px unused
+     beside it, which is what read as cramped. The flag-bearers copy looked
+     right only because .prose never capped it. 66ch keeps the measure
+     readable while using the column. */
+  .section-head__aside .section-callout,
+  .section-head__aside .section__lede { max-width: 66ch; }
+}
+
+/* On a wide display the 1220px cap is the thing making the page feel narrow.
+   Scoped with :has() so only this page widens while the rest of the site is
+   reviewed — promoting it is a one-line change to the :root token. */
+@media (min-width: 1500px) {
+  html:has(.page-bar) { --shell: min(1380px, 100% - 4rem); }
+}
 .section__lede { max-width: 60ch; color: var(--muted); }
 .section--navy .section__lede { color: rgba(245,242,234,.75); }
+
+/* A lede that carries a warning rather than a description. Ink, not muted, and
+   set larger, because the grey treatment was letting people skim past it. */
+.section-callout {
+  max-width: 54ch;
+  font-size: clamp(1.08rem, 1.5vw, 1.26rem);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--ink);
+  border-left: 3px solid var(--brass);
+  padding-left: 1.1rem;
+  margin-bottom: 2rem;
+}
+.section--navy .section-callout { color: var(--bone); }
 
 .rule {
   height: 3px; width: 68px;
@@ -1410,4 +1491,842 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   * { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
+}
+
+/* ==========================================================================
+   TICKET REQUESTS PAGE (staged — not linked from nav or sitemap)
+   --------------------------------------------------------------------------
+   Everything here is scoped to components that only exist on
+   ticket-requests.html. The one global-looking rule is the :has() scroll
+   padding, which matches only a page that carries .page-bar.
+   ========================================================================== */
+
+/* The sticky sub-bar hangs off the bottom of .site-header, so it needs the
+   header's real height. .header-inner is 96px, dropping to 72px at 900px —
+   these two must stay in step with those. */
+:root { --header-h: 96px; --page-bar-h: 62px; }
+@media (max-width: 900px) { :root { --header-h: 72px; --page-bar-h: 56px; } }
+
+/* Anchor jumps and keyboard focus have to clear BOTH sticky bars, or the
+   target lands underneath them. Scoped with :has() so the other four pages,
+   which have no sub-bar, keep their current behaviour. */
+html:has(.page-bar) {
+  scroll-padding-top: calc(var(--header-h) + var(--page-bar-h) + 1.25rem);
+}
+
+/* A photo can drop straight into .page-hero__art later; until then the art
+   layer is the inline SVG in the markup. The base rule only styles svg. */
+.page-hero__art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- Sticky page bar: label, section anchors, standing CTA ---------- */
+.page-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;                      /* under .site-header's 60 */
+  min-height: var(--page-bar-h);
+  background: rgba(10, 23, 51, .95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(200, 162, 74, .3);
+}
+.page-bar__inner {
+  width: var(--shell); margin-inline: auto;
+  min-height: var(--page-bar-h);
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.page-bar__label {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  text-transform: uppercase; letter-spacing: var(--display-track);
+  font-size: .95rem; color: var(--brass-lt); flex: none;
+}
+.page-bar__nav { margin-right: auto; }
+.page-bar__nav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap;
+}
+.page-bar__nav a {
+  position: relative;
+  color: rgba(245, 242, 234, .82);
+  text-decoration: none;
+  font-size: .82rem; font-weight: 600;
+  letter-spacing: .04em;
+  padding: .35rem 0;
+}
+/* Brass rule that slides in, matching the main nav's hover language rather
+   than filling a block of colour behind the label. */
+.page-bar__nav a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0;
+  height: 2px; background: var(--brass);
+  transition: right .2s ease;
+}
+@media (hover: hover) {
+  .page-bar__nav a:hover { color: var(--bone); }
+  .page-bar__nav a:hover::after { right: 0; }
+}
+/* The page's primary action. Bigger than a nav link on purpose, with the crest
+   doing the work a bare label was not. */
+.page-bar__cta {
+  flex: none;
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-size: .86rem; letter-spacing: .1em;
+  padding: .68rem 1.25rem;
+}
+.page-bar__crest { flex: none; display: block; width: 18px; height: auto; }
+
+@media (max-width: 900px) {
+  .page-bar__label, .page-bar__nav { display: none; }
+  .page-bar__inner { justify-content: center; padding-block: .5rem; }
+  .page-bar__cta { font-size: .8rem; padding: .6rem 1.1rem; }
+}
+
+/* ---------- Eligibility: a two-item checklist, both required ---------- */
+.req-list { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.req-item {
+  display: flex; align-items: stretch;
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  border-radius: var(--rad);
+  overflow: hidden;
+}
+/* Numeral panel running the full height of the card, standing in for the brass
+   left rule the tick version used. flex: none, or the panel narrows as the copy
+   beside it grows — the .lamp lesson. */
+.req-item__n {
+  flex: none;
+  width: 4rem;
+  display: grid; place-items: center;
+  background: var(--navy-800); color: var(--brass-lt);
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 2.3rem; line-height: 1;
+}
+.req-item__body { padding: 1.35rem 1.5rem; }
+.req-item h3 { font-size: 1.12rem; margin-bottom: .3rem; }
+.req-item p { color: var(--muted); font-size: .96rem; margin-bottom: 0; }
+
+/* ---------- The request steps (a real sequence, so numbered) ---------- */
+.step-list { counter-reset: step; list-style: none; padding: 0; margin: 0; display: grid; gap: 1.5rem; }
+.step-list > li {
+  position: relative;
+  padding-left: 3.4rem;
+  max-width: 68ch;
+}
+.step-list > li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: -.15rem;
+  width: 2.25rem; height: 2.25rem; border-radius: 50%; flex: none;
+  background: var(--navy-800); color: var(--brass-lt);
+  font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+  display: grid; place-items: center;
+  box-shadow: 0 0 0 4px var(--bone);
+}
+.step-list h3 {
+  font-size: 1.15rem; margin-bottom: .35rem;
+}
+.step-list p { color: var(--muted); margin-bottom: 0; }
+.step-list strong { color: var(--ink); }
+
+/* Monospaced inline values people have to copy exactly */
+.mono {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .92em;
+  background: var(--bone-2);
+  border: 1px solid rgba(5, 12, 30, .1);
+  border-radius: 3px;
+  padding: .1em .38em;
+  white-space: nowrap;
+}
+
+/* ---------- Worked example, shaped like the email people have to send ---- */
+.email-mock {
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  border-top: 4px solid var(--navy-700);
+  border-radius: var(--rad);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+  max-width: 460px;
+}
+.email-mock__tag {
+  background: var(--navy-800); color: var(--brass-lt);
+  font-size: .64rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+  padding: .45rem 1.1rem;
+}
+.email-mock dl { margin: 0; padding: 1.1rem 1.2rem; display: grid; gap: .7rem; }
+.email-mock dt {
+  font-size: .64rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.email-mock dd {
+  margin: .1rem 0 0; font-size: .94rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--ink); line-height: 1.5;
+}
+.email-mock dd + dt { border-top: 1px solid var(--bone-2); padding-top: .7rem; }
+
+/* ==========================================================================
+   SEAT MAP — the whole ground, with our fourteen blocks lifted out of it.
+
+   The 103 context blocks are drawn quietly and are not interactive; only the
+   blocks we can actually request respond. Detail arrives as an overlay pinned
+   to the block itself rather than in a card elsewhere on the page, so nothing
+   makes the reader look away from what they are pointing at.
+
+   The plan is generated from a polar model (see the note in the markup) and is
+   a schematic: stand, tier and adjacency are right, exact seat geometry is not.
+   ========================================================================== */
+.seatmap {
+  position: relative;                /* the overlay is pinned inside this */
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  border-radius: var(--rad);
+  box-shadow: var(--shadow-lift);
+  padding: .6rem;
+  margin: 1.4rem 0 1.1rem;
+}
+.seatmap svg { width: 100%; height: auto; display: block; }
+
+/* ---- Pitch ---- */
+.sm-turf { fill: #E9E5DA; stroke: rgba(5, 12, 30, .18); stroke-width: 1; }
+.sm-turf-line { fill: none; stroke: rgba(5, 12, 30, .22); stroke-width: 1; }
+
+/* ---- Stand names ---- */
+.sm-stand text {
+  fill: var(--navy-700); text-anchor: middle;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 19px; letter-spacing: .2em;
+}
+
+/* ---- Context blocks: present, quiet, inert ---- */
+.sm-context { pointer-events: none; }
+.sm-context path {
+  fill: rgba(5, 12, 30, .045);
+  stroke: rgba(5, 12, 30, .14);
+  stroke-width: 1;
+}
+.sm-context text {
+  fill: var(--muted); text-anchor: middle;
+  font-family: var(--font-body); font-weight: 600; font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Our fourteen ---- */
+.sm-b--ours { cursor: pointer; }
+.sm-b--ours path {
+  fill: var(--navy-800);
+  stroke: #fff; stroke-width: 1.5;
+  transition: fill .15s ease, opacity .15s ease;
+}
+.sm-b--ours text {
+  fill: var(--bone); text-anchor: middle; pointer-events: none;
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+.sm-b--ours[data-type="family"] path   { fill: var(--navy-600); }
+.sm-b--ours[data-type="standing"] path { fill: var(--brass-dk); }
+
+/* Guarded: on touch a tap latches :hover and the lift would stick. */
+@media (hover: hover) {
+  .sm-b--ours:hover path { fill: var(--brass); }
+  .sm-b--ours:hover text { fill: var(--navy-900); }
+}
+.sm-b--ours:focus { outline: none; }        /* moved onto the path */
+.sm-b--ours:focus-visible path { stroke: var(--navy-900); stroke-width: 3; }
+.sm-b--ours.is-on path { fill: var(--brass); }
+.sm-b--ours.is-on text { fill: var(--navy-900); }
+
+/* Key filtering. The attribute is only present while a filter is on. */
+.seatmap[data-filter] .sm-b--ours { opacity: .18; }
+.seatmap[data-filter="standard"] .sm-b--ours[data-type="standard"],
+.seatmap[data-filter="family"]   .sm-b--ours[data-type="family"],
+.seatmap[data-filter="standing"] .sm-b--ours[data-type="standing"] { opacity: 1; }
+
+/* ==========================================================================
+   The overlay. Pinned to the block under the cursor, clamped to the map's
+   edges by script so it never hangs off the side.
+   ========================================================================== */
+.sm-tip {
+  position: absolute; z-index: 3;
+  pointer-events: none;                 /* never eats the hover that opened it */
+  width: 232px;
+  background: var(--navy-900);
+  border-top: 3px solid var(--brass);
+  border-radius: var(--rad);
+  box-shadow: 0 22px 44px -16px rgba(5, 12, 30, .7);
+  padding: .95rem 1.1rem 1.05rem;
+  color: var(--bone);
+}
+.sm-tip::after {                        /* caret, pointing down at the block */
+  content: ""; position: absolute;
+  left: 50%; bottom: -5px; translate: -50% 0;
+  width: 10px; height: 10px; rotate: 45deg;
+  background: var(--navy-900);
+}
+.sm-tip.is-below::after { bottom: auto; top: -5px; background: var(--brass); }
+.sm-tip__num {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 2.3rem; line-height: .95; color: var(--brass-lt);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: .1rem;
+}
+.sm-tip__where {
+  font-size: .95rem; font-weight: 700; margin-bottom: .6rem;
+}
+.sm-tip__type {
+  display: inline-block; margin-bottom: 0;
+  font-size: .64rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+  border-radius: 2px; padding: .26rem .55rem;
+  background: rgba(245, 242, 234, .18); color: var(--bone);
+}
+.sm-tip__type[data-type="family"]   { background: var(--navy-600); }
+.sm-tip__type[data-type="standing"] { background: var(--brass); color: var(--navy-900); }
+.sm-tip__note {
+  margin: .7rem 0 0; font-size: .84rem; line-height: 1.45;
+  color: rgba(245, 242, 234, .8);
+}
+/* The age limit on safe standing. Amber, not red: it is a restriction to
+   notice, not something that has gone wrong. Amber text on an amber wash over
+   navy measures about 7.2:1, so it carries without shouting. */
+.sm-tip__note[data-level="warn"] {
+  display: flex; align-items: center; gap: .45rem;
+  background: rgba(226, 167, 42, .16);
+  border-left: 3px solid var(--wait);
+  border-radius: 2px;
+  padding: .5rem .65rem;
+  color: var(--wait);
+  font-size: .82rem; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.sm-tip__note[data-level="warn"]::before {
+  content: "!";
+  flex: none;
+  width: 1.05rem; height: 1.05rem; border-radius: 50%;
+  background: var(--wait); color: var(--navy-900);
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: .76rem; line-height: 1;
+}
+.sm-tip p { margin-bottom: 0; }
+
+/* Narrow-screen variant: pinned across the bottom of the map, laid out as a
+   row so it stays a shallow band instead of covering half the plan. */
+.sm-tip.is-sheet {
+  left: .5rem; right: .5rem; bottom: .5rem; top: auto;
+  width: auto;
+  display: flex; align-items: center; gap: .8rem;
+  padding: .65rem .85rem;
+}
+.sm-tip.is-sheet::after { display: none; }
+.sm-tip.is-sheet .sm-tip__num { flex: none; font-size: 2rem; margin-bottom: 0; }
+.sm-tip.is-sheet .sm-tip__body { min-width: 0; }
+.sm-tip.is-sheet .sm-tip__where { margin-bottom: .28rem; font-size: .88rem; }
+.sm-tip.is-sheet .sm-tip__type { font-size: .6rem; padding: .22rem .48rem; }
+.sm-tip.is-sheet .sm-tip__note { margin-top: .28rem; font-size: .78rem; line-height: 1.35; }
+
+/* A section that runs straight into a full-bleed band below it does not need
+   its own closing padding as well. */
+.section--to-band { padding-bottom: clamp(2rem, 3.5vw, 2.75rem); }
+
+/* ==========================================================================
+   MAP NOTE — a slim navy band under the seat map. Navy against the bone
+   sections either side of it, so a caveat people should actually read does
+   not sit around looking like a footnote.
+   ========================================================================== */
+.map-note {
+  display: block;
+  background: var(--navy-800);
+  border-block: 2px solid var(--brass);
+  color: var(--bone);
+}
+.map-note__inner {
+  width: var(--shell); margin-inline: auto;
+  padding: 1.45rem 0;
+  display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap;
+}
+/* The auto right margin is load-bearing: it is what pushes the price scale out
+   to the shell's right edge instead of leaving it stranded next to the copy. */
+.map-note p {
+  margin: 0 auto 0 0;
+  max-width: 58ch;
+  font-size: .96rem; line-height: 1.55;
+  color: rgba(245, 242, 234, .86);
+}
+.map-note a {
+  color: var(--brass-lt); font-weight: 700;
+  text-decoration: underline; text-decoration-color: rgba(230, 205, 139, .5);
+  text-underline-offset: 3px;
+}
+/* ==========================================================================
+   BANNER LABEL — shared by the seat-map note, the prices band and the
+   in-form note, so the three read as one device.
+
+   A <span>, not a <p>: `.map-note p` is (0,1,1) and would outrank a bare
+   `.note-label` class. That is the trap that silently rendered the old Prices
+   title at .96rem, and the same one that had `.site-nav ul` beating
+   `.nav-menu__list`. Using an element the parent rule cannot match sidesteps
+   the fight rather than escalating it.
+   ========================================================================== */
+.note-label {
+  display: block;
+  flex: none;
+  align-self: center;
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  text-transform: uppercase; letter-spacing: var(--display-track);
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  line-height: 1.05;
+  color: var(--bone);
+  padding-bottom: .34rem;
+  border-bottom: 2px solid var(--brass);
+}
+
+/* Sentences that should break where we say, not where the column happens to
+   run out. Blocks on every width; each may still wrap on a narrow screen.
+   Used by the banner copy and by the seating lede. */
+.note-line { display: block; }
+.note-line + .note-line { margin-top: .2rem; }
+/* In a lede the extra leading would read as a paragraph break rather than a
+   line break, so the sentences sit on consecutive lines instead. */
+.section__lede .note-line + .note-line { margin-top: 0; }
+
+/* Price categories as a scale rather than a sentence. The three brass steps
+   were each checked against the tile ground: 9.3:1, 6.1:1 and 4.7:1. */
+.price-scale {
+  flex: none;
+  display: flex; gap: .5rem;
+  list-style: none; margin: 0; padding: 0;
+}
+.price-scale__step {
+  display: flex; flex-direction: column; align-items: center; gap: .15rem;
+  min-width: 4.6rem;
+  padding: .55rem .5rem .5rem;
+  background: rgba(245, 242, 234, .08);
+  border-radius: var(--rad);
+}
+.price-scale__cat {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.4rem; line-height: 1;
+}
+.price-scale__coins { font-weight: 800; font-size: .84rem; letter-spacing: .04em; }
+.price-scale__label {
+  font-size: .56rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(245, 242, 234, .72);
+}
+.price-scale__step[data-cat="A"] .price-scale__cat,
+.price-scale__step[data-cat="A"] .price-scale__coins { color: #E6CD8B; }
+.price-scale__step[data-cat="B"] .price-scale__cat,
+.price-scale__step[data-cat="B"] .price-scale__coins { color: #C8A24A; }
+.price-scale__step[data-cat="C"] .price-scale__cat,
+.price-scale__step[data-cat="C"] .price-scale__coins { color: #B08D42; }
+@media (max-width: 700px) {
+  .map-note__inner { gap: .9rem; padding: 1.2rem 0; }
+  .map-note p { font-size: .9rem; }
+}
+
+/* ---- The key ---- */
+.sm-key { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.sm-key__btn {
+  font-family: var(--font-body);       /* a button does not inherit the page face */
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #fff; border: 1px solid var(--bone-2); border-radius: 999px;
+  padding: .4rem .85rem;
+  font-size: .82rem; font-weight: 600; color: var(--ink);
+  cursor: pointer;
+}
+@media (hover: hover) { .sm-key__btn:hover { border-color: var(--brass); } }
+.sm-key__btn[aria-pressed="true"] {
+  background: var(--navy-800); border-color: var(--navy-800); color: var(--bone);
+}
+.sm-key__sw { flex: none; width: 12px; height: 12px; border-radius: 2px; }
+.sm-sw--standard { background: var(--navy-800); }
+.sm-sw--family   { background: var(--navy-600); }
+.sm-sw--standing { background: var(--brass-dk); }
+.sm-key__btn[aria-pressed="true"] .sm-sw--standard { box-shadow: inset 0 0 0 1px rgba(245,242,234,.55); }
+.sm-key__n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.sm-key__btn[aria-pressed="true"] .sm-key__n { color: rgba(245, 242, 234, .72); }
+.sm-key__rest { font-size: .8rem; color: var(--muted); margin-left: .25rem; }
+
+@media (max-width: 900px) {
+  /* Context numbers would land under 4px once the SVG scales down, so the
+     shapes stay and their labels go. Ours get bigger in user units instead. */
+  .sm-context text { display: none; }
+  .sm-b--ours text { font-size: 25px; }
+  .sm-stand text { font-size: 26px; }
+  .sm-tip { width: 200px; }
+  .sm-key { gap: .4rem; }
+  .sm-key__btn { padding: .34rem .7rem; font-size: .76rem; }
+  .sm-key__rest { margin-left: 0; }
+}
+
+/* ==========================================================================
+   DEADLINES — grouped by on-sale batch, because the three dates are shared
+   across every match in a batch. The source spreadsheet repeats them per row;
+   that repetition is a spreadsheet artefact, not the real structure.
+   ========================================================================== */
+.batch-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.batch-card {
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  border-radius: var(--rad);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.batch-card__head {
+  background: var(--navy-800);
+  padding: .7rem 1.2rem;
+  display: flex; align-items: center; gap: .7rem;
+}
+.batch-card__n {
+  flex: none;
+  font-family: var(--font-display); font-weight: 700; font-size: .95rem;
+  background: var(--brass); color: var(--navy-900);
+  border-radius: 3px; padding: .08rem .48rem;
+  font-variant-numeric: tabular-nums;
+}
+/* Explicit class, not span:last-child — appending the state pill would
+   otherwise steal this styling off the label. Same trap as .nav-menu__list. */
+.batch-card__label {
+  font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--brass-lt);
+}
+
+/* ---- Batch state: on sale, closed, or not open yet -----------------------
+   Colour rides on the card's top edge, its header tint and a labelled pill.
+   The pill carries words as well as colour, because status must never be
+   signalled by colour alone. Tints are the status token laid over navy at low
+   alpha, so the brass label and number chip keep their contrast.
+   ------------------------------------------------------------------------- */
+.batch-card { border-top: 3px solid var(--bone-2); }
+
+.batch-state {
+  margin-left: auto; flex: none;
+  font-size: .63rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase;
+  border-radius: 2px; padding: .24rem .5rem;
+  background: rgba(245, 242, 234, .16); color: var(--bone);
+}
+
+/* The live batch is the one thing on this screen anyone has to act on, so it
+   gets a lift as well as a colour. */
+.batch-card--open {
+  border-top-color: var(--go);
+  box-shadow: 0 22px 46px -18px rgba(47, 160, 92, .5);
+}
+.batch-card--open .batch-card__head {
+  background: linear-gradient(0deg, rgba(47, 160, 92, .24), rgba(47, 160, 92, .24)), var(--navy-800);
+}
+.batch-card--open .batch-state,
+.batch-card--open .batch-card__n { background: var(--go); color: var(--navy-900); }
+
+.batch-card--soon { border-top-color: var(--wait); }
+.batch-card--soon .batch-card__head {
+  background: linear-gradient(0deg, rgba(226, 167, 42, .2), rgba(226, 167, 42, .2)), var(--navy-800);
+}
+.batch-card--soon .batch-state,
+.batch-card--soon .batch-card__n { background: var(--wait); color: var(--navy-900); }
+
+.batch-card--closed { border-top-color: var(--stop); }
+.batch-card--closed .batch-card__head {
+  background: linear-gradient(0deg, rgba(201, 55, 46, .2), rgba(201, 55, 46, .2)), var(--navy-800);
+}
+.batch-card--closed .batch-state,
+.batch-card--closed .batch-card__n { background: var(--stop); color: #fff; }
+/* A closed card is NOT dimmed. Fading .batch-flow dropped the label keys to
+   about 3.1:1, and the header colour plus the CLOSED pill already carry the
+   state. Past dates stay fully legible as reference. */
+.batch-flow { padding: 1.1rem 1.2rem; display: grid; gap: .55rem; border-bottom: 1px solid var(--bone-2); }
+.batch-flow__row { display: flex; align-items: baseline; gap: .7rem; }
+.batch-flow__k {
+  flex: none; min-width: 9.2rem;
+  font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.batch-flow__v { font-weight: 700; font-size: .95rem; font-variant-numeric: tabular-nums; }
+.batch-flow__row--key .batch-flow__v { color: var(--navy-700); }
+.batch-flow__row--key .batch-flow__k { color: var(--brass-dk); }
+
+.match-rows { list-style: none; margin: 0; padding: .5rem .4rem .6rem; }
+.match-rows li {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .5rem .8rem;
+  border-radius: 3px;
+}
+.match-rows li + li { border-top: 1px solid var(--bone-2); }
+.match-rows__team { font-weight: 700; font-size: .96rem; margin-right: auto; }
+.match-rows__date {
+  font-size: .86rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.cat {
+  flex: none;
+  width: 1.5rem; height: 1.5rem; border-radius: 3px;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: .82rem;
+  background: var(--bone-2); color: var(--navy-700);
+  border: 1px solid rgba(5, 12, 30, .12);
+}
+
+/* ==========================================================================
+   MATCHDAY GALLERY
+   Desktop only, on Joe's call: atmosphere rather than information, and on a
+   phone it would push the page's actual job further down. Hidden outright
+   rather than reflowed, and the images are lazy so nothing loads for a reader
+   who will never see them.
+
+   The rail breaks out of .shell to bleed off the right edge, which is what
+   signals "there is more along here" without a scrollbar having to say it.
+   ========================================================================== */
+.gallery-section { overflow: hidden; }
+.gallery-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.gallery-nav { display: flex; gap: .5rem; flex: none; }
+.gallery-btn {
+  font-family: var(--font-body);      /* a button does not inherit the page face */
+  flex: none;
+  width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  background: #fff; color: var(--navy-800);
+  border: 1px solid var(--bone-2);
+  font-size: 1.05rem; line-height: 1;
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+.gallery-btn:disabled { opacity: .38; cursor: default; }
+@media (hover: hover) {
+  .gallery-btn:not(:disabled):hover {
+    background: var(--navy-800); color: var(--brass-lt); border-color: var(--navy-800);
+  }
+}
+
+.gallery-rail {
+  display: flex; gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: .25rem calc((100% - var(--shell)) / 2) 1.2rem;
+  /* scroll-snap aligns cards to the SNAPPORT, which is inset by scroll-padding
+     and not by padding. Without this the first card snaps to the scrollport
+     edge, so the strip rests 110px scrolled and card one sits flush against
+     the window instead of lining up under the heading. Only visible once the
+     strip overflows, which two photos never did. Keep these two in step. */
+  scroll-padding-inline: calc((100% - var(--shell)) / 2);
+  scrollbar-width: thin;
+}
+.gallery-rail:focus-visible { outline: 3px solid var(--brass-lt); outline-offset: -3px; }
+.gallery-item {
+  flex: none;                         /* or each card shrinks as more are added */
+  width: clamp(280px, 26vw, 380px);
+  margin: 0;
+  scroll-snap-align: start;
+  border-radius: var(--rad);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  box-shadow: var(--shadow-lift);
+}
+.gallery-item img {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 3 / 2; object-fit: cover; object-position: center;
+}
+@media (hover: hover) {
+  .gallery-item { transition: transform .22s ease, box-shadow .28s ease; }
+  .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 26px 46px -22px rgba(5, 12, 30, .5); }
+}
+
+@media (max-width: 900px) { .gallery-section { display: none; } }
+@media (prefers-reduced-motion: reduce) { .gallery-rail { scroll-behavior: auto; } }
+
+/* ==========================================================================
+   REQUEST FORM
+   Controls get their font family named explicitly: inputs, selects and
+   textareas do not inherit the page face, the same trap as .nav-cta.
+   ========================================================================== */
+.req-form {
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  border-top: 4px solid var(--brass);
+  border-radius: var(--rad);
+  box-shadow: var(--shadow-lift);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  max-width: 880px;
+  margin-inline: auto;          /* centred, or the shell's right half sits empty */
+}
+.req-form__row { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
+@media (min-width: 700px) {
+  .req-form__row { grid-template-columns: 1fr auto; align-items: start; }
+  .req-form__row .field--narrow { min-width: 8.5rem; }
+  /* The two preference selects share the width evenly. */
+  .req-form__row:has(#rf-pref1) { grid-template-columns: 1fr 1fr; }
+}
+
+.field { display: block; margin-bottom: 1.1rem; }
+.field > label {
+  display: block; margin-bottom: .4rem;
+  font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--navy-700);
+}
+.field__opt {
+  font-weight: 600; letter-spacing: .04em; text-transform: none;
+  color: var(--muted);
+}
+.field input, .field select, .field textarea {
+  font-family: var(--font-body);
+  width: 100%;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--bone);
+  border: 1px solid rgba(5, 12, 30, .22);
+  border-radius: var(--rad);
+  padding: .68rem .8rem;
+}
+.field textarea { resize: vertical; min-height: 4.5rem; }
+.field select { cursor: pointer; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+  outline: 3px solid var(--brass-lt); outline-offset: 2px;
+  border-color: var(--navy-700);
+}
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] {
+  border-color: var(--stop);
+  background: #FFF6F5;
+}
+.field__hint { margin: .4rem 0 0; font-size: .84rem; color: var(--muted); }
+.field__hint a { color: var(--navy-700); font-weight: 700; }
+
+/* Inset note, for a caveat that belongs inside the form rather than in a
+   full-bleed band. Same navy-and-brass language as .map-note, sized to sit
+   between two fields. */
+.form-note {
+  display: flex; align-items: center; gap: 1.1rem;
+  background: var(--navy-800);
+  border-left: 3px solid var(--brass);
+  border-radius: var(--rad);
+  padding: .9rem 1.05rem;
+  margin: 0 0 1.2rem;
+}
+
+.form-note p {
+  margin: 0;
+  font-size: .9rem; line-height: 1.5;
+  color: rgba(245, 242, 234, .88);
+}
+
+/* The live deadline beside the match dropdown */
+#rf-deadline.is-set { color: var(--navy-700); font-weight: 700; }
+#rf-deadline.is-closed { color: var(--stop); font-weight: 700; }
+
+/* ---- One group per ticket ---- */
+.req-form__people { border: 0; padding: 0; margin: 0 0 1.1rem; }
+.req-form__people legend {
+  padding: 0; margin-bottom: .4rem;
+  font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--navy-700);
+}
+.person {
+  background: var(--bone-2);
+  border-radius: var(--rad);
+  padding: 1rem 1.05rem .3rem;
+  margin-top: .8rem;
+}
+.person__n {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--brass-dk);
+  margin-bottom: .7rem;
+}
+.person__grid { display: grid; gap: .8rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) {
+  .person__grid { grid-template-columns: 1fr 1fr .9fr; }
+}
+.person .field { margin-bottom: .8rem; }
+.person .field > label { font-size: .7rem; letter-spacing: .08em; }
+.person .field input { background: #fff; }
+
+/* ---- Foot ---- */
+.req-form__foot {
+  display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
+  margin-top: 1.5rem; padding-top: 1.4rem;
+  border-top: 1px solid var(--bone-2);
+}
+.req-form__status { margin: 0; font-size: .9rem; font-weight: 700; }
+.req-form__status[data-tone="bad"] { color: var(--stop); }
+.req-form__status[data-tone="good"] { color: #1F7644; }   /* darkened --go, 4.8:1 on white */
+.req-form__status[data-tone="busy"] { color: var(--muted); }
+
+/* ---------- Good to know ---------- */
+.note-cards { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+/* Five caveats should not run the length of the screen. */
+.note-cards--tight { gap: .85rem; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); }
+.note-cards--tight .note-card { padding: 1.1rem 1.15rem; }
+.note-cards--tight .note-card h3 { font-size: .98rem; margin-bottom: .3rem; }
+.note-cards--tight .note-card p { font-size: .88rem; line-height: 1.5; }
+.note-card {
+  background: #fff;
+  border: 1px solid var(--bone-2);
+  border-top: 3px solid var(--navy-700);
+  border-radius: var(--rad);
+  padding: 1.5rem 1.4rem;
+}
+.note-card h3 { font-size: 1.08rem; margin-bottom: .45rem; }
+.note-card p { color: var(--muted); font-size: .94rem; margin-bottom: 0; }
+.note-card--warn { border-top-color: var(--brass); }
+
+/* ==========================================================================
+   HOVER PASS — ticket-requests page
+   --------------------------------------------------------------------------
+   One hover language across the page: cards lift a little and deepen their
+   shadow, interactive text picks up brass, controls darken their border.
+
+   All of it inside @media (hover: hover). On a touch screen a tap latches the
+   hover state and a lifted card stays lifted, which is the bug that put the
+   guard on .media-row .figure and the nav dropdown.
+
+   Nothing here transforms an element that .reveal also transforms: .reveal
+   sits on the grid containers (.req-list, .note-cards, .batch-grid), never on
+   the cards themselves, so the two cannot fight.
+   ========================================================================== */
+@media (hover: hover) {
+
+  /* Cards that are not links still respond, because the whole page is a thing
+     you point at rather than click through. */
+  .req-item,
+  .note-card,
+  .batch-card,
+  .email-mock,
+  .price-scale__step {
+    transition: transform .2s ease, box-shadow .25s ease, border-color .2s ease;
+  }
+  .req-item:hover,
+  .note-card:hover,
+  .email-mock:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 44px -22px rgba(5, 12, 30, .5);
+    border-color: rgba(200, 162, 74, .55);
+  }
+
+  /* Batch cards keep their state colour on the top edge, so only the lift and
+     the shadow change. The live one keeps its green cast. */
+  .batch-card:hover { transform: translateY(-3px); box-shadow: 0 26px 48px -22px rgba(5, 12, 30, .52); }
+  .batch-card--open:hover { box-shadow: 0 26px 52px -18px rgba(47, 160, 92, .62); }
+
+  /* Rows inside a batch card highlight individually, so a long card still
+     tells you which fixture you are reading. */
+  .match-rows li { transition: background .16s ease; }
+  .match-rows li:hover { background: var(--bone-2); }
+  .batch-card--closed .match-rows li:hover { background: rgba(201, 55, 46, .07); }
+  .batch-card--open .match-rows li:hover { background: rgba(47, 160, 92, .1); }
+
+  .price-scale__step:hover { transform: translateY(-2px); background: rgba(245, 242, 234, .14); }
+
+  /* Text links in the navy bands */
+  .map-note a:hover { text-decoration-color: var(--brass-lt); color: #fff; }
+
+  /* Form controls: a clear pointer affordance before focus takes over */
+  .field input, .field select, .field textarea { transition: border-color .16s ease, background .16s ease; }
+  .field input:hover, .field select:hover, .field textarea:hover {
+    border-color: var(--navy-700);
+    background: #fff;
+  }
+  .field__hint a:hover { color: var(--brass-dk); }
+
+  /* The numeral panel warms up with its card */
+  .req-item:hover .req-item__n { background: var(--navy-700); }
+
+  /* Eyebrow rules and section titles stay put: they are not interactive, and
+     moving them on hover reads as a defect rather than a response. */
 }
