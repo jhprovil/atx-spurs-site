@@ -1100,40 +1100,14 @@
         <div class="field">
           <label for="rf-match">Which match</label>
           <select id="rf-match" name="match" required>
+            <!-- Options are built at load from data/site-data.js. Do not
+                 hand-write fixtures here: this list used to be a third copy
+                 of the dates (after site-data.js and the deadline cards) and
+                 the monthly fixture audit does not touch this file, so a
+                 broadcast change would move a date in one place and leave the
+                 form offering the old one. Tottenham's batch grouping is the
+                 only thing kept by hand, in BATCHES below. -->
             <option value="" selected>Choose a match</option>
-            <optgroup label="Batch 1 &mdash; apply by Mon, Jul 6, 2026 - 5pm">
-              <option value="Newcastle United (Sat, Aug 29, 2026)" data-deadline="2026-07-06" data-deadline-label="Mon, Jul 6, 2026 &middot; 5pm" data-team="Newcastle United" data-date="Sat, Aug 29, 2026">Newcastle United &mdash; Sat, Aug 29, 2026</option>
-              <option value="Everton (Sat, Sep 12, 2026)" data-deadline="2026-07-06" data-deadline-label="Mon, Jul 6, 2026 &middot; 5pm" data-team="Everton" data-date="Sat, Sep 12, 2026">Everton &mdash; Sat, Sep 12, 2026</option>
-              <option value="Aston Villa (Sat, Sep 19, 2026)" data-deadline="2026-07-06" data-deadline-label="Mon, Jul 6, 2026 &middot; 5pm" data-team="Aston Villa" data-date="Sat, Sep 19, 2026">Aston Villa &mdash; Sat, Sep 19, 2026</option>
-            </optgroup>
-            <optgroup label="Batch 2 &mdash; apply by Tue, Jul 28, 2026 - 5pm">
-              <option value="Coventry City (Mon, Oct 19, 2026)" data-deadline="2026-07-28" data-deadline-label="Tue, Jul 28, 2026 &middot; 5pm" data-team="Coventry City" data-date="Mon, Oct 19, 2026">Coventry City &mdash; Mon, Oct 19, 2026</option>
-              <option value="Crystal Palace (Sat, Oct 31, 2026)" data-deadline="2026-07-28" data-deadline-label="Tue, Jul 28, 2026 &middot; 5pm" data-team="Crystal Palace" data-date="Sat, Oct 31, 2026">Crystal Palace &mdash; Sat, Oct 31, 2026</option>
-            </optgroup>
-            <optgroup label="Batch 3 &mdash; apply by Tue, Aug 25, 2026 - 5pm">
-              <option value="Ipswich Town (Sat, Nov 21, 2026)" data-deadline="2026-08-25" data-deadline-label="Tue, Aug 25, 2026 &middot; 5pm" data-team="Ipswich Town" data-date="Sat, Nov 21, 2026">Ipswich Town &mdash; Sat, Nov 21, 2026</option>
-              <option value="Fulham (Wed, Dec 2, 2026)" data-deadline="2026-08-25" data-deadline-label="Tue, Aug 25, 2026 &middot; 5pm" data-team="Fulham" data-date="Wed, Dec 2, 2026">Fulham &mdash; Wed, Dec 2, 2026</option>
-              <option value="Arsenal (Sat, Dec 5, 2026)" data-deadline="2026-08-25" data-deadline-label="Tue, Aug 25, 2026 &middot; 5pm" data-team="Arsenal" data-date="Sat, Dec 5, 2026">Arsenal &mdash; Sat, Dec 5, 2026</option>
-            </optgroup>
-            <optgroup label="Batch 4 &mdash; apply by Tue, Sep 29, 2026 - 5pm">
-              <option value="AFC Bournemouth (Sat, Dec 26, 2026)" data-deadline="2026-09-29" data-deadline-label="Tue, Sep 29, 2026 &middot; 5pm" data-team="AFC Bournemouth" data-date="Sat, Dec 26, 2026">AFC Bournemouth &mdash; Sat, Dec 26, 2026</option>
-              <option value="Brighton &amp; Hove Albion (Tue, Dec 29, 2026)" data-deadline="2026-09-29" data-deadline-label="Tue, Sep 29, 2026 &middot; 5pm" data-team="Brighton &amp; Hove Albion" data-date="Tue, Dec 29, 2026">Brighton &amp; Hove Albion &mdash; Tue, Dec 29, 2026</option>
-            </optgroup>
-            <optgroup label="Batch 5 &mdash; apply by Tue, Oct 27, 2026 - 5pm">
-              <option value="Leeds United (Sat, Jan 16, 2027)" data-deadline="2026-10-27" data-deadline-label="Tue, Oct 27, 2026 &middot; 5pm" data-team="Leeds United" data-date="Sat, Jan 16, 2027">Leeds United &mdash; Sat, Jan 16, 2027</option>
-              <option value="Sunderland (Sat, Jan 30, 2027)" data-deadline="2026-10-27" data-deadline-label="Tue, Oct 27, 2026 &middot; 5pm" data-team="Sunderland" data-date="Sat, Jan 30, 2027">Sunderland &mdash; Sat, Jan 30, 2027</option>
-              <option value="Manchester City (Wed, Feb 10, 2027)" data-deadline="2026-10-27" data-deadline-label="Tue, Oct 27, 2026 &middot; 5pm" data-team="Manchester City" data-date="Wed, Feb 10, 2027">Manchester City &mdash; Wed, Feb 10, 2027</option>
-            </optgroup>
-            <optgroup label="Batch 6 &mdash; apply by Tue, Dec 8, 2026 - 5pm">
-              <option value="Liverpool (Sat, Feb 27, 2027)" data-deadline="2026-12-08" data-deadline-label="Tue, Dec 8, 2026 &middot; 5pm" data-team="Liverpool" data-date="Sat, Feb 27, 2027">Liverpool &mdash; Sat, Feb 27, 2027</option>
-              <option value="Nottingham Forest (Sat, Mar 13, 2027)" data-deadline="2026-12-08" data-deadline-label="Tue, Dec 8, 2026 &middot; 5pm" data-team="Nottingham Forest" data-date="Sat, Mar 13, 2027">Nottingham Forest &mdash; Sat, Mar 13, 2027</option>
-              <option value="Brentford (Sat, Apr 10, 2027)" data-deadline="2026-12-08" data-deadline-label="Tue, Dec 8, 2026 &middot; 5pm" data-team="Brentford" data-date="Sat, Apr 10, 2027">Brentford &mdash; Sat, Apr 10, 2027</option>
-            </optgroup>
-            <optgroup label="Batch 7 &mdash; apply by Tue, Feb 16, 2027 - 5pm">
-              <option value="Hull City (Sat, Apr 24, 2027)" data-deadline="2027-02-16" data-deadline-label="Tue, Feb 16, 2027 &middot; 5pm" data-team="Hull City" data-date="Sat, Apr 24, 2027">Hull City &mdash; Sat, Apr 24, 2027</option>
-              <option value="Chelsea (Sat, May 8, 2027)" data-deadline="2027-02-16" data-deadline-label="Tue, Feb 16, 2027 &middot; 5pm" data-team="Chelsea" data-date="Sat, May 8, 2027">Chelsea &mdash; Sat, May 8, 2027</option>
-              <option value="Manchester United (Sun, May 23, 2027)" data-deadline="2027-02-16" data-deadline-label="Tue, Feb 16, 2027 &middot; 5pm" data-team="Manchester United" data-date="Sun, May 23, 2027">Manchester United &mdash; Sun, May 23, 2027</option>
-            </optgroup>
           </select>
           <p class="field__hint" id="rf-deadline" data-empty="Pick a match and the application deadline shows here.">Pick a match and the application deadline shows here.</p>
         </div>
@@ -1500,6 +1474,78 @@
   var submit = document.getElementById("rf-submit");
   var today = new Date().toISOString().slice(0, 10);
 
+  /* ---- Tottenham's on-sale batches. Which match sits in which batch is their
+     call and cannot be derived, so that grouping is the one thing kept by hand.
+     Everything else — the opponent's real date, the weekday, the deadline
+     label — comes from data/site-data.js, so a fixture correction from the
+     monthly audit reaches this form with no second edit.
+
+     Adding next season: replace the seven entries. Each is a batch number, the
+     application deadline, and the home league opponents in it. All seven
+     deadlines have been 5pm; change APPLY_TIME if that ever moves. ---- */
+  var APPLY_TIME = "5pm";
+  var BATCHES = [
+    { n: 1, apply: "2026-07-06", teams: ["Newcastle United", "Everton", "Aston Villa"] },
+    { n: 2, apply: "2026-07-28", teams: ["Coventry City", "Crystal Palace"] },
+    { n: 3, apply: "2026-08-25", teams: ["Ipswich Town", "Fulham", "Arsenal"] },
+    { n: 4, apply: "2026-09-29", teams: ["AFC Bournemouth", "Brighton & Hove Albion"] },
+    { n: 5, apply: "2026-10-27", teams: ["Leeds United", "Sunderland", "Manchester City"] },
+    { n: 6, apply: "2026-12-08", teams: ["Liverpool", "Nottingham Forest", "Brentford"] },
+    { n: 7, apply: "2027-02-16", teams: ["Hull City", "Chelsea", "Manchester United"] }
+  ];
+
+  /* Build the Date from local components. Passing "2026-08-29" to the Date
+     constructor parses it as UTC, which renders as the 28th anywhere west of
+     Greenwich — Austin included. */
+  function prettyDate(iso) {
+    var p = iso.split("-");
+    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString("en-US", {
+      weekday: "short", month: "short", day: "numeric", year: "numeric"
+    });
+  }
+
+  /* ---- One option per batch entry, dates read from the fixtures array. A
+     named opponent with no home league fixture is skipped rather than rendered
+     with a blank date; that only happens if a team name here stops matching
+     site-data.js, so it says so in the console. ---- */
+  (function buildMatches() {
+    var data = window.AUSTIN_SPURS;
+    var fixtures = (data && data.fixtures) || [];
+    if (!fixtures.length) return;      /* pruneClosed() then shows the closed state */
+
+    function homeLeagueFixture(team) {
+      var hits = fixtures.filter(function (f) {
+        return f.opponent === team && f.venue === "H" && f.comp === "Premier League";
+      });
+      return hits.length === 1 ? hits[0] : null;
+    }
+
+    BATCHES.forEach(function (batch) {
+      var applyLabel = prettyDate(batch.apply) + " \u00b7 " + APPLY_TIME;
+      var group = document.createElement("optgroup");
+      group.label = "Batch " + batch.n + " \u2014 apply by " + applyLabel;
+
+      batch.teams.forEach(function (team) {
+        var f = homeLeagueFixture(team);
+        if (!f) {
+          if (window.console) console.warn("Ticket form: no single home league fixture for " + team);
+          return;
+        }
+        var when = prettyDate(f.date);
+        var o = document.createElement("option");
+        o.value = team + " (" + when + ")";
+        o.textContent = team + " \u2014 " + when;
+        o.setAttribute("data-deadline", batch.apply);
+        o.setAttribute("data-deadline-label", applyLabel);
+        o.setAttribute("data-team", team);
+        o.setAttribute("data-date", when);
+        group.appendChild(o);
+      });
+
+      if (group.children.length) match.appendChild(group);
+    });
+  })();
+
   /* ---- Matches whose deadline has gone come out of the list entirely.
      Recomputed on every load against the day's date, so it stays current with
      no upkeep. An optgroup left with nothing in it goes too. ---- */
@@ -1524,6 +1570,13 @@
   })();
 
   function showDeadline() {
+    /* Leave the closed-state message alone. pruneClosed() disables the select
+       and writes the "every window has closed" line, and this function runs
+       once on init with nothing selected — without this guard it overwrites
+       that explanation with the neutral placeholder, leaving a dead dropdown
+       and no reason given. */
+    if (match.disabled) return;
+
     var o = match.options[match.selectedIndex];
     var label = o && o.getAttribute("data-deadline-label");
     deadline.className = "field__hint";
